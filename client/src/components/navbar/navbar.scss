@@ -1,0 +1,328 @@
+@import "../../responsive.scss";
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 90px;
+  padding: 0 60px;
+  background: transparent;
+  position: fixed; // Changed from absolute to fixed for scroll tracking
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  // Klasa dodawana przez JavaScript po scrollu
+  &.scrolled {
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    height: 80px; // Trochę mniejszy po scrollu
+  }
+
+  @include md {
+    height: 80px;
+    padding: 0 40px;
+    
+    &.scrolled {
+      height: 70px;
+    }
+  }
+
+  @include sm {
+    height: 70px;
+    padding: 0 20px;
+    
+    &.scrolled {
+      height: 65px;
+    }
+  }
+
+  a {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #fbbf24, #f59e0b);
+      transition: width 0.3s ease;
+    }
+
+    @include sm {
+      display: none;
+    }
+
+    &:hover {
+      color: #fbbf24;
+      transform: translateY(-2px);
+      
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+
+  .left {
+    flex: 3;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+
+    @include md {
+      gap: 35px;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+
+      &::after {
+        display: none;
+      }
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      img {
+        width: 32px;
+        filter: drop-shadow(0 2px 8px rgba(251, 191, 36, 0.4));
+        transition: all 0.3s ease;
+        
+        @include sm {
+          width: 28px;
+        }
+      }
+
+      span {
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+
+        @include md {
+          display: none;
+        }
+
+        @include sm {
+          display: initial;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  // Logo zmienia się po scrollu (opcjonalnie)
+  &.scrolled .left .logo {
+    img {
+      filter: drop-shadow(0 2px 12px rgba(251, 191, 36, 0.6));
+    }
+  }
+
+  .right {
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 25px;
+    height: 100%;
+
+    .user {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-weight: 600;
+      color: #fff;
+
+      img {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid rgba(251, 191, 36, 0.4);
+        transition: all 0.3s ease;
+
+        &:hover {
+          border-color: #fbbf24;
+          box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+        }
+      }
+
+      .profile {
+        span {
+          padding: 12px 28px;
+          background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+          color: #000;
+          font-weight: 700;
+          border-radius: 10px;
+          cursor: pointer;
+          border: none;
+          position: relative;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+          display: inline-block;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(251, 191, 36, 0.5);
+          }
+        }
+
+        .notification {
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background: linear-gradient(135deg, #ef4444, #dc2626);
+          color: white;
+          border-radius: 50%;
+          width: 22px;
+          height: 22px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 11px;
+          font-weight: 700;
+          box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+          animation: pulse 2s ease-in-out infinite;
+        }
+      }
+    }
+
+    a {
+      padding: 12px 24px;
+      font-size: 15px;
+      
+      @include md {
+        padding: 10px 20px;
+      }
+    }
+
+    .register {
+      background: rgba(251, 191, 36, 0.15);
+      border: 1px solid rgba(251, 191, 36, 0.4);
+      border-radius: 10px;
+      color: #fbbf24;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      
+      &::after {
+        display: none;
+      }
+
+      &:hover {
+        background: rgba(251, 191, 36, 0.25);
+        border-color: #fbbf24;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+      }
+    }
+
+    // Register button po scrollu może być bardziej widoczny
+    nav.scrolled & .register {
+      background: rgba(251, 191, 36, 0.20);
+      border-color: rgba(251, 191, 36, 0.5);
+    }
+
+    .menuicon {
+      display: none;
+      z-index: 999;
+
+      img {
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        filter: brightness(0) invert(1);
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: scale(1.15);
+          filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(251, 191, 36, 0.7));
+        }
+      }
+
+      @include sm {
+        display: inline;
+      }
+    }
+
+    .menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(30, 41, 59, 0.98));
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      color: white;
+      height: 100vh;
+      width: 75%;
+      max-width: 320px;
+      transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 35px;
+      border-left: 1px solid rgba(251, 191, 36, 0.2);
+      box-shadow: -8px 0 40px rgba(0, 0, 0, 0.6);
+
+      &.active {
+        right: 0;
+      }
+
+      a {
+        display: block;
+        font-size: 19px;
+        font-weight: 600;
+        padding: 16px 35px;
+        width: 85%;
+        text-align: center;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        
+        &::after {
+          display: none;
+        }
+
+        &:hover {
+          background: rgba(251, 191, 36, 0.15);
+          color: #fbbf24;
+          transform: translateX(-8px);
+        }
+      }
+
+      @include sm {
+        a {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}

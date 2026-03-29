@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Environment variables - NIGDY nie wrzucaj do repo
+.env
+.env.local
+.env.production
+**/.env
+**/.env.local
+
+# Build outputs
+dist/
+**/dist/
+build/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Vite cache
+**/.vite/
+
+# Drizzle migrations (opcjonalnie - możesz to odkomentować)
+# server/drizzle/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/settings.json
+.idea/
+
+# Logs
+*.log
+npm-debug.log*

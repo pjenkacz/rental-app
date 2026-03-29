@@ -1,0 +1,199 @@
+@import "../../responsive.scss";
+
+.searchBar {
+  width: 100%;
+  
+  .type {
+    margin-bottom: 14px;
+    
+    button {
+      padding: 15px 36px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.75);
+      cursor: pointer;
+      text-transform: capitalize;
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      font-family: 'Inter', sans-serif;
+      
+      &:first-child {
+        border-top-left-radius: 14px;
+        border-bottom-left-radius: 14px;
+        border-right: none;
+      }
+      
+      &:last-child {
+        border-top-right-radius: 14px;
+        border-bottom-right-radius: 14px;
+        border-left: none;
+      }
+      
+      &.active {
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        color: #000;
+        border-color: #fbbf24;
+        box-shadow: 0 4px 20px rgba(251, 191, 36, 0.35);
+        transform: translateY(-2px);
+        font-weight: 700;
+      }
+      
+      &:hover:not(.active) {
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+      
+      @include sm {
+        padding: 14px 28px;
+        font-size: 15px;
+      }
+    }
+  }
+
+  form {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(255, 255, 255, 0.10);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 18px;
+    padding: 10px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(251, 191, 36, 0.25);
+      box-shadow: 0 8px 32px rgba(251, 191, 36, 0.15);
+    }
+    
+    &:focus-within {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: rgba(251, 191, 36, 0.45);
+      box-shadow: 0 8px 40px rgba(251, 191, 36, 0.25);
+    }
+
+    @include md {
+      gap: 10px;
+      padding: 8px;
+    }
+
+    @include sm {
+      flex-direction: column;
+      gap: 12px;
+      padding: 14px;
+    }
+
+    input {
+      flex: 1;
+      border: none;
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      padding: 18px 24px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      min-width: 0;
+      font-family: 'Inter', sans-serif;
+      
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.45);
+        font-weight: 400;
+      }
+      
+      &:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.10);
+        box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.2);
+      }
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      @include lg {
+        padding: 16px 20px;
+        font-size: 15px;
+      }
+
+      @include md {
+        padding: 16px 18px;
+      }
+
+      @include sm {
+        width: 100%;
+        padding: 18px;
+      }
+    }
+    
+    button {
+      padding: 18px 32px;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+      border-radius: 14px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(251, 191, 36, 0.35);
+      
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.35),
+          transparent
+        );
+        transition: left 0.5s ease;
+      }
+      
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 28px rgba(251, 191, 36, 0.5);
+        
+        &::before {
+          left: 100%;
+        }
+        
+        img {
+          transform: scale(1.15);
+        }
+      }
+      
+      &:active {
+        transform: translateY(-1px);
+      }
+      
+      @include sm {
+        width: 100%;
+        padding: 18px;
+      }
+      
+      img {
+        width: 22px;
+        height: 22px;
+        filter: brightness(0) saturate(100%);
+        transition: transform 0.3s ease;
+        
+        @include sm {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+}
