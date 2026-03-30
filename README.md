@@ -17,7 +17,7 @@ Full-stack real estate marketplace built with React + TypeScript + Express + Pos
 
 ### 1. Klonuj repo
 ```bash
-git clone https://github.com/twoj-username/rental-app.git
+git clone https://github.com/pjenkacz/rental-app.git
 cd rental-app
 ```
 
