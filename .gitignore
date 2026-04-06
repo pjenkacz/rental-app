@@ -34,3 +34,11 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+
+# not neccessary
+.agents
+.claude
+CLAUDE.md 
+skills-lock.json
+wizard_guide.md 
+

@@ -9,6 +9,7 @@ export const users = pgTable("users", {
   lastName: text("last_name"),
   avatarUrl: text("avatar_url"),
   role: userRoleEnum("role").default("client").notNull(),
+  phone: text("phone"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

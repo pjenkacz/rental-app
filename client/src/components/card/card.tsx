@@ -2,15 +2,18 @@ import './card.scss';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// Typ dla obiektu `item`
-interface CardItem {
-  id: string | number;
-  img: string;
+export interface CardItem {
+  id: string;
   title: string;
   address: string;
+  city: string;
   price: number;
-  bedroom: number;
-  bathroom: number;
+  bedrooms: number;
+  bathrooms: number;
+  area?: number | null;
+  listingType: 'buy' | 'rent';
+  propertyType: 'apartment' | 'house' | 'condo' | 'land';
+  images: { url: string; order?: number }[];
 }
 
 interface CardProps {
@@ -18,41 +21,43 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ item }) => {
+  const coverImage = item.images[0]?.url ?? '';
+
   return (
     <div className="card">
       <div className="imageContainer">
-        <Link to={`/${item.id}`}>
-          <img src={item.img} alt="fota" className="cardImage" />
+        <Link to={`/listings/${item.id}`}>
+          <img src={coverImage} alt={item.title} className="cardImage" />
         </Link>
       </div>
       <div className="textContainer">
         <h2 className="title">
-          <Link to={`/${item.id}`}>{item.title}</Link>
+          <Link to={`/listings/${item.id}`}>{item.title}</Link>
         </h2>
         <p className="address">
           <img src="/pin.png" alt="" />
-          <span>{item.address}</span>
+          <span>{item.address}, {item.city}</span>
         </p>
         <p className="price">
-          <span>$ {item.price}</span>
+          <span>$ {item.price.toLocaleString()}</span>
         </p>
         <div className="bottom">
           <div className="features">
             <div className="feature">
               <img src="/bed.png" alt="" />
-              <span>{item.bedroom} bedrooms</span>
+              <span>{item.bedrooms} bedroom{item.bedrooms !== 1 ? 's' : ''}</span>
             </div>
             <div className="feature">
               <img src="/bath.png" alt="" />
-              <span>{item.bathroom} bathrooms</span>
+              <span>{item.bathrooms} bathroom{item.bathrooms !== 1 ? 's' : ''}</span>
             </div>
           </div>
           <div className="icons">
             <div className="icon">
-              <img src="/save.png" alt="" />
+              <img src="/save.png" alt="Save" />
             </div>
             <div className="icon">
-              <img src="/chat.png" alt="" />
+              <img src="/chat.png" alt="Chat" />
             </div>
           </div>
         </div>

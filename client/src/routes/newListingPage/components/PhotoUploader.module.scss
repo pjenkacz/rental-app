@@ -1,0 +1,267 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.uploader {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+// ── Drop zone ──────────────────────────────────────────────────────────────────
+.dropZone {
+  border: 2px dashed $color-border;
+  border-radius: $radius-md;
+  padding: $spacing-xl $spacing-lg;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-sm;
+  cursor: pointer;
+  text-align: center;
+  background: $color-white;
+  transition: border-color 0.2s ease, background 0.2s ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: $color-accent;
+    background: rgba(217, 117, 88, 0.03);
+    outline: none;
+  }
+
+  &.dragOver {
+    border-color: $color-accent;
+    background: rgba(217, 117, 88, 0.06);
+  }
+}
+
+.dropIcon {
+  color: $color-accent;
+  opacity: 0.7;
+}
+
+.dropText {
+  font-family: $font-family-base;
+  font-size: $font-size-body;
+  font-weight: $font-weight-medium;
+  color: $color-text;
+  margin: 0;
+}
+
+.dropLink {
+  color: $color-accent;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.dropHint {
+  font-family: $font-family-base;
+  font-size: $font-size-hint;
+  color: $color-text-muted;
+  margin: 0;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+// ── Photo grid ────────────────────────────────────────────────────────────────
+.photoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-sm;
+
+  @include bp-sm {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include bp-md {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+// ── Sortable photo item ───────────────────────────────────────────────────────
+.photoItem {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: $radius-sm;
+  overflow: hidden;
+  border: 2px solid transparent;
+  background: $color-surface;
+  transition: border-color 0.2s ease;
+
+  &.mainPhoto {
+    border-color: $color-accent;
+  }
+
+  &.errorPhoto {
+    border-color: $color-error;
+  }
+}
+
+.photoImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.dragHandle {
+  position: absolute;
+  top: $spacing-xs;
+  left: $spacing-xs;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background: rgba(28, 25, 23, 0.5);
+  color: $color-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+
+  .photoItem:hover & {
+    opacity: 1;
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.removeBtn {
+  position: absolute;
+  top: $spacing-xs;
+  right: $spacing-xs;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(28, 25, 23, 0.6);
+  color: $color-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease, background 0.15s ease;
+
+  .photoItem:hover & {
+    opacity: 1;
+  }
+
+  &:hover {
+    background: $color-error;
+  }
+}
+
+.mainBadge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 4px $spacing-sm;
+  background: $color-accent;
+  color: $color-white;
+  font-family: $font-family-base;
+  font-size: 0.7rem;
+  font-weight: $font-weight-semibold;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+// ── Upload overlay ────────────────────────────────────────────────────────────
+.uploadOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(250, 250, 249, 0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+}
+
+.progressBar {
+  width: 70%;
+  height: 4px;
+  background: $color-border;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: $color-accent;
+  border-radius: 2px;
+  transition: width 0.2s ease;
+}
+
+.progressText {
+  font-family: $font-family-base;
+  font-size: $font-size-hint;
+  font-weight: $font-weight-medium;
+  color: $color-accent-dark;
+}
+
+// ── Success indicator ─────────────────────────────────────────────────────────
+.successIndicator {
+  position: absolute;
+  bottom: $spacing-xs;
+  right: $spacing-xs;
+  color: $color-success;
+  background: $color-white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ── Error overlay ─────────────────────────────────────────────────────────────
+.errorOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(250, 250, 249, 0.92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: $color-error;
+  font-family: $font-family-base;
+  font-size: 0.72rem;
+  font-weight: $font-weight-medium;
+  text-align: center;
+  padding: $spacing-sm;
+}
+
+.retryBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  padding: 4px 10px;
+  border: 1.5px solid $color-error;
+  border-radius: 4px;
+  background: transparent;
+  color: $color-error;
+  font-family: $font-family-base;
+  font-size: 0.72rem;
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: rgba(192, 57, 43, 0.08);
+  }
+}
+
+// ── Reorder hint ──────────────────────────────────────────────────────────────
+.reorderHint {
+  font-family: $font-family-base;
+  font-size: $font-size-hint;
+  color: $color-text-muted;
+  margin: 0;
+  text-align: center;
+}

@@ -1,0 +1,159 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.profileLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: $color-text-muted;
+}
+
+.profileLayout {
+  max-width: 1200px;
+  margin: 0 auto;
+  // mobile base: smaller top padding
+  padding: 80px $spacing-md $spacing-xl;
+
+  @include bp-md {
+    padding: $navbar-height $spacing-lg $spacing-xl;
+  }
+
+  @include bp-xl {
+    padding: $navbar-height $spacing-xl $spacing-xl;
+  }
+}
+
+// ── Profile Header ────────────────────────────────────────────────────────────
+
+.profileHeader {
+  margin-bottom: $spacing-xl;
+
+  .headerInner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-md;
+    text-align: center;
+
+    @include bp-md {
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+      gap: $spacing-lg;
+    }
+  }
+
+  .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    border: 3px solid $color-accent;
+    flex-shrink: 0;
+    transition: box-shadow 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 0 0 4px rgba($color-accent, 0.3);
+    }
+
+    @include bp-md {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  .headerInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    h2 {
+      font-size: $font-lg;
+      font-weight: 700;
+      margin: 0;
+
+      @include bp-md {
+        font-size: $font-xl;
+      }
+    }
+
+    > span {
+      color: $color-text-muted;
+      font-size: $font-sm;
+    }
+
+    .stats {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: $spacing-sm;
+      font-size: $font-sm;
+      color: $color-text-muted;
+      margin-top: 4px;
+
+      @include bp-md {
+        justify-content: flex-start;
+      }
+    }
+  }
+}
+
+// ── Tab Bar ───────────────────────────────────────────────────────────────────
+
+.profileTabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 2px solid $color-border;
+  margin-bottom: $spacing-xl;
+  overflow-x: auto;             // scrollable horizontally on mobile — no wrapping
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab {
+    padding: 10px 14px;
+    font-size: $font-sm;
+    font-weight: 500;
+    color: $color-text-muted;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;        // overlap nav border-bottom
+    transition: color 0.2s ease, border-color 0.2s ease;
+    text-decoration: none;
+
+    &:hover {
+      color: $color-accent;
+    }
+
+    &.active {
+      color: $color-text;
+      border-bottom-color: $color-accent;
+      font-weight: 700;
+    }
+
+    &--external {
+      color: $color-text-muted;
+      font-style: italic;
+
+      &:hover {
+        color: $color-accent;
+      }
+    }
+
+    @include bp-md {
+      padding: 12px 20px;
+      font-size: $font-base;
+    }
+  }
+}
+
+// ── Tab Content ───────────────────────────────────────────────────────────────
+
+.profileContent {
+  min-height: 300px;
+}

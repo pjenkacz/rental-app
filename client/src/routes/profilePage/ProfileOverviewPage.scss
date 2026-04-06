@@ -1,0 +1,33 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.profileOverview {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+}
+
+.overviewSection {
+  h3 {
+    font-size: $font-lg;
+    font-weight: 700;
+    margin-bottom: $spacing-md;
+  }
+}
+
+.emptyState {
+  color: $color-text-muted;
+  font-size: $font-sm;
+  margin-bottom: $spacing-sm;
+}
+
+.ctaLink {
+  font-size: $font-sm;
+  font-weight: 600;
+  color: $color-accent-dark;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

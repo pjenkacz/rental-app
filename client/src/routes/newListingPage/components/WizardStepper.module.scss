@@ -1,0 +1,119 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: $spacing-lg $spacing-lg $spacing-md;
+  background: $color-white;
+  border-bottom: 1px solid $color-border;
+  overflow-x: auto;
+  scrollbar-width: none;
+  position: sticky;
+  top: $navbar-height;
+  z-index: 50;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include bp-md {
+    padding: $spacing-lg $spacing-xl $spacing-md;
+    justify-content: center;
+  }
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-xs;
+  flex-shrink: 0;
+  position: relative;
+
+  &.clickable {
+    cursor: pointer;
+
+    .circle {
+      &:hover {
+        background: $color-accent-dark;
+        border-color: $color-accent-dark;
+      }
+    }
+
+    .label {
+      &:hover {
+        color: $color-accent-dark;
+      }
+    }
+  }
+}
+
+.circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid $color-border;
+  background: $color-white;
+  color: $color-text-muted;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-label;
+  font-weight: $font-weight-semibold;
+  font-family: $font-family-base;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+
+  .active & {
+    background: $color-accent;
+    border-color: $color-accent;
+    color: $color-white;
+    box-shadow: 0 0 0 3px rgba(217, 117, 88, 0.2);
+  }
+
+  .completed & {
+    background: $color-accent;
+    border-color: $color-accent;
+    color: $color-white;
+  }
+}
+
+.label {
+  font-size: 0.7rem;
+  font-weight: $font-weight-medium;
+  font-family: $font-family-base;
+  color: $color-text-muted;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+
+  .active & {
+    color: $color-accent;
+    font-weight: $font-weight-semibold;
+  }
+
+  .completed & {
+    color: $color-text;
+  }
+
+  @include bp-md {
+    font-size: $font-size-hint;
+  }
+}
+
+.connector {
+  flex: 1;
+  height: 2px;
+  background: $color-border;
+  min-width: 24px;
+  margin-bottom: 20px; // align with circle center
+  transition: background 0.3s ease;
+
+  @include bp-md {
+    min-width: 48px;
+  }
+
+  &.connectorDone {
+    background: $color-accent;
+  }
+}

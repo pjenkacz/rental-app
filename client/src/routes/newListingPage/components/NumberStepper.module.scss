@@ -1,0 +1,53 @@
+@use '../../../styles/variables' as *;
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  border: 1.5px solid $color-border;
+  border-radius: $radius-sm;
+  background: $color-white;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: transparent;
+  color: $color-text;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  flex-shrink: 0;
+
+  &:hover:not(:disabled) {
+    background: $color-surface;
+    color: $color-accent;
+  }
+
+  &:active:not(:disabled) {
+    background: $color-border;
+  }
+
+  &:disabled {
+    color: $color-border;
+    cursor: not-allowed;
+  }
+}
+
+.value {
+  min-width: 48px;
+  text-align: center;
+  font-family: $font-family-base;
+  font-size: $font-size-body;
+  font-weight: $font-weight-semibold;
+  color: $color-text;
+  border-left: 1.5px solid $color-border;
+  border-right: 1.5px solid $color-border;
+  line-height: 44px;
+  user-select: none;
+}

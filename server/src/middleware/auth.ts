@@ -9,9 +9,7 @@ export const requireAuth = (
   const { userId } = getAuth(req);
 
   if (!userId) {
-    return res.status(401).json({ 
-      error: 'Unauthorized musisz być zalogowany' 
-    });
+    return res.status(401).json({ error: 'Unauthorized' });
   }
 
   next(); // użytkownik zalogowany – przepuść dalej

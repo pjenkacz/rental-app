@@ -1,44 +1,45 @@
-@import "../../responsive.scss";
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
 
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 90px;
-  padding: 0 60px;
+  // mobile base
+  height: 70px;
+  padding: 0 20px;
   background: transparent;
-  position: fixed; // Changed from absolute to fixed for scroll tracking
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
-  // Klasa dodawana przez JavaScript po scrollu
+  @include bp-md {
+    height: 80px;
+    padding: 0 40px;
+  }
+
+  @include bp-xl {
+    height: 90px;
+    padding: 0 60px;
+  }
+
   &.scrolled {
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-    height: 80px; // Trochę mniejszy po scrollu
-  }
+    height: 65px;
 
-  @include md {
-    height: 80px;
-    padding: 0 40px;
-    
-    &.scrolled {
+    @include bp-md {
       height: 70px;
     }
-  }
 
-  @include sm {
-    height: 70px;
-    padding: 0 20px;
-    
-    &.scrolled {
-      height: 65px;
+    @include bp-xl {
+      height: 80px;
     }
   }
 
@@ -48,7 +49,7 @@ nav {
     font-size: 16px;
     transition: all 0.3s ease;
     position: relative;
-    
+
     &::after {
       content: '';
       position: absolute;
@@ -56,32 +57,39 @@ nav {
       left: 0;
       width: 0;
       height: 2px;
-      background: linear-gradient(90deg, #fbbf24, #f59e0b);
+      background: linear-gradient(90deg, $color-accent, $color-accent-dark);
       transition: width 0.3s ease;
     }
 
-    @include sm {
-      display: none;
+    // hide nav links on mobile — show on tablet+
+    display: none;
+
+    @include bp-md {
+      display: inline;
     }
 
     &:hover {
-      color: #fbbf24;
+      color: $color-accent;
       transform: translateY(-2px);
-      
-      &::after {
-        width: 100%;
-      }
+
+      &::after { width: 100%; }
     }
   }
+
+  // ── Left ────────────────────────────────────────────────────────────────────
 
   .left {
     flex: 3;
     display: flex;
     align-items: center;
-    gap: 50px;
+    gap: 35px;
 
-    @include md {
+    @include bp-md {
       gap: 35px;
+    }
+
+    @include bp-xl {
+      gap: 50px;
     }
 
     .logo {
@@ -93,49 +101,50 @@ nav {
       color: #fff;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
       transition: all 0.3s ease;
+      // logo link is always visible — override the a { display: none } above
+      display: flex !important;
 
-      &::after {
-        display: none;
-      }
+      &::after { display: none; }
 
-      &:hover {
-        transform: scale(1.05);
-      }
+      &:hover { transform: scale(1.05); }
 
       img {
-        width: 32px;
-        filter: drop-shadow(0 2px 8px rgba(251, 191, 36, 0.4));
+        width: 28px;
+        filter: drop-shadow(0 2px 8px rgba($color-accent, 0.4));
         transition: all 0.3s ease;
-        
-        @include sm {
-          width: 28px;
+
+        @include bp-md {
+          width: 32px;
         }
       }
 
       span {
-        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        // visible on mobile
+        font-size: 20px;
+        background: linear-gradient(135deg, $color-accent 0%, $color-accent-dark 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
 
-        @include md {
+        @include bp-md {
+          // hide on tablet (space is tight)
           display: none;
         }
 
-        @include sm {
+        @include bp-xl {
+          // show again on desktop
           display: initial;
-          font-size: 20px;
+          font-size: 24px;
         }
       }
     }
   }
 
-  // Logo zmienia się po scrollu (opcjonalnie)
-  &.scrolled .left .logo {
-    img {
-      filter: drop-shadow(0 2px 12px rgba(251, 191, 36, 0.6));
-    }
+  &.scrolled .left .logo img {
+    filter: drop-shadow(0 2px 12px rgba($color-accent, 0.6));
   }
+
+  // ── Right ───────────────────────────────────────────────────────────────────
 
   .right {
     flex: 2;
@@ -152,37 +161,22 @@ nav {
       font-weight: 600;
       color: #fff;
 
-      img {
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid rgba(251, 191, 36, 0.4);
-        transition: all 0.3s ease;
-
-        &:hover {
-          border-color: #fbbf24;
-          box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
-        }
-      }
-
       .profile {
         span {
           padding: 12px 28px;
-          background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+          background: linear-gradient(135deg, $color-accent 0%, $color-accent-dark 100%);
           color: #000;
           font-weight: 700;
           border-radius: 10px;
           cursor: pointer;
-          border: none;
           position: relative;
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-          box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+          box-shadow: 0 4px 15px rgba($color-accent, 0.3);
           display: inline-block;
 
           &:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(251, 191, 36, 0.5);
+            box-shadow: 0 6px 25px rgba($color-accent, 0.5);
           }
         }
 
@@ -206,44 +200,73 @@ nav {
       }
     }
 
-    a {
-      padding: 12px 24px;
+    // Clerk auth buttons — reset native button, apply same look as nav links
+    button.navBtn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
       font-size: 15px;
-      
-      @include md {
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.9);
+      padding: 12px 24px;
+      transition: all 0.3s ease;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, $color-accent, $color-accent-dark);
+        transition: width 0.3s ease;
+      }
+
+      &:hover {
+        color: $color-accent;
+        transform: translateY(-2px);
+
+        &::after { width: 100%; }
+      }
+
+      &.register {
+        background: rgba($color-accent, 0.15);
+        border: 1px solid rgba($color-accent, 0.4);
+        border-radius: 10px;
+        color: $color-accent;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+
+        &::after { display: none; }
+
+        &:hover {
+          background: rgba($color-accent, 0.25);
+          border-color: $color-accent;
+          box-shadow: 0 4px 15px rgba($color-accent, 0.3);
+        }
+      }
+
+      @include bp-md {
         padding: 10px 20px;
       }
     }
 
-    .register {
-      background: rgba(251, 191, 36, 0.15);
-      border: 1px solid rgba(251, 191, 36, 0.4);
-      border-radius: 10px;
-      color: #fbbf24;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
-      
-      &::after {
-        display: none;
-      }
+    // Clerk UserButton avatar sizing
+    .cl-userButtonAvatarBox {
+      width: 44px !important;
+      height: 44px !important;
+      border: 2px solid rgba($color-accent, 0.4);
+      border-radius: 50%;
+      transition: border-color 0.3s ease;
 
-      &:hover {
-        background: rgba(251, 191, 36, 0.25);
-        border-color: #fbbf24;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
-      }
+      &:hover { border-color: $color-accent; }
     }
 
-    // Register button po scrollu może być bardziej widoczny
-    nav.scrolled & .register {
-      background: rgba(251, 191, 36, 0.20);
-      border-color: rgba(251, 191, 36, 0.5);
-    }
-
+    // Hamburger icon — visible only on mobile
     .menuicon {
-      display: none;
+      display: inline;
       z-index: 999;
 
       img {
@@ -255,15 +278,16 @@ nav {
 
         &:hover {
           transform: scale(1.15);
-          filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(251, 191, 36, 0.7));
+          filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba($color-accent, 0.7));
         }
       }
 
-      @include sm {
-        display: inline;
+      @include bp-md {
+        display: none; // hidden on tablet+
       }
     }
 
+    // Slide-in drawer — mobile only
     .menu {
       position: fixed;
       top: 0;
@@ -281,15 +305,15 @@ nav {
       align-items: center;
       justify-content: center;
       gap: 35px;
-      border-left: 1px solid rgba(251, 191, 36, 0.2);
+      border-left: 1px solid rgba($color-accent, 0.2);
       box-shadow: -8px 0 40px rgba(0, 0, 0, 0.6);
+      z-index: 998;
 
-      &.active {
-        right: 0;
-      }
+      &.active { right: 0; }
 
-      a {
-        display: block;
+      a,
+      button.navBtn {
+        display: block !important; // override the a { display: none } for desktop links
         font-size: 19px;
         font-weight: 600;
         padding: 16px 35px;
@@ -297,21 +321,18 @@ nav {
         text-align: center;
         border-radius: 10px;
         transition: all 0.3s ease;
-        
-        &::after {
-          display: none;
-        }
+        color: rgba(255, 255, 255, 0.9);
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+
+        &::after { display: none; }
 
         &:hover {
-          background: rgba(251, 191, 36, 0.15);
-          color: #fbbf24;
+          background: rgba($color-accent, 0.15);
+          color: $color-accent;
           transform: translateX(-8px);
-        }
-      }
-
-      @include sm {
-        a {
-          display: block;
         }
       }
     }
@@ -319,10 +340,6 @@ nav {
 }
 
 @keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.15);
-  }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
 }

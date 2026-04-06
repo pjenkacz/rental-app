@@ -8,13 +8,16 @@ import { users } from './db/schema';
 import listingsRouter from './routes/lisitings';
 import usersRouter from './routes/users';
 import favoritesRouter from './routes/favourites';
-//import uploadRouter from './routes/upload';
+import webhooksRouter from './routes/webhooks';
 import { errorHandler } from './middleware/errorHandler';
-
-
+import { createRouteHandler } from 'uploadthing/express';
+import { uploadRouter } from './uploadthing/router';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// Webhook Clerk — musi być przed express.json() bo svix potrzebuje surowego body
+app.use('/api/webhooks', express.raw({ type: 'application/json' }), webhooksRouter);
 
 // Middleware
 app.use(cors({ origin: process.env.CLIENT_URL }));
@@ -25,14 +28,14 @@ app.use(clerkMiddleware());
 app.use('/api/listings', listingsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/favorites', favoritesRouter);
-//app.use('/api/upload', uploadRouter);
+app.use('/api/uploadthing', createRouteHandler({ router: uploadRouter }));
 
 // Health check
 app.get('/api/health', (_, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-//app.use(errorHandler);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);

@@ -1,0 +1,97 @@
+@use '../../../styles/variables' as *;
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-family: $font-family-base;
+  font-size: $font-size-label;
+  font-weight: $font-weight-medium;
+  color: $color-text-muted;
+  line-height: $line-height-body;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.optional {
+  font-weight: $font-weight-regular;
+  color: $color-text-muted;
+  opacity: 0.7;
+  font-size: 0.8rem;
+}
+
+.hint {
+  font-family: $font-family-base;
+  font-size: $font-size-hint;
+  color: $color-text-muted;
+  line-height: $line-height-body;
+  margin: 0;
+}
+
+.error {
+  font-family: $font-family-base;
+  font-size: $font-size-hint;
+  color: $color-error;
+  line-height: $line-height-body;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  &::before {
+    content: '⚠';
+    font-size: 0.75rem;
+  }
+}
+
+// Global input styles — used by children inside .field
+.field {
+  :global(input),
+  :global(textarea),
+  :global(select) {
+    font-family: $font-family-base;
+    font-size: $font-size-body;
+    font-weight: $font-weight-regular;
+    color: $color-text;
+    background: $color-white;
+    border: 1.5px solid $color-border;
+    border-radius: $radius-sm;
+    padding: 12px 14px;
+    width: 100%;
+    line-height: $line-height-body;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: $color-text-muted;
+      opacity: 0.6;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $color-accent;
+      box-shadow: $shadow-input-focus;
+    }
+  }
+
+  &.hasError {
+    :global(input),
+    :global(textarea),
+    :global(select) {
+      border-color: $color-error;
+
+      &:focus {
+        box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(192, 57, 43, 0.35);
+      }
+    }
+  }
+
+  :global(textarea) {
+    resize: vertical;
+    min-height: 100px;
+  }
+}

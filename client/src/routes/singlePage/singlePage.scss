@@ -1,194 +1,203 @@
-@import '../../responsive.scss';
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
 
-.singlePage{
-    display: flex;
+.singlePage {
+  display: flex;
+  flex-direction: column; // mobile: stacked, single column
+
+  @include bp-lg {
+    flex-direction: row;  // desktop: side-by-side
     height: 100%;
+  }
 
-    @include md{
-        flex-direction: column;
+  .details {
+    flex: none;
+    height: 100%;
+    background-color: white;
+    padding: 0;
+
+    @include bp-md {
+      height: max-content;
+      padding: 0;
     }
-    .details{
-        flex:3;
-        height: 100%; 
-        overflow-y: scroll;
-        
-        @include md{
-            flex:none;
-            height: max-content;
-            margin-bottom: 30px;
-        }
-        @include sm{
-            flex:none;
-            height: 100%;
-            background-color: white;
-            padding: 0px;
-        }
-        .wrapper{
-            padding-right: 50px;
 
-            .info{
-                margin-top: 20px;
-
-                .top{
-                    display: flex;
-                    justify-content: space-between;
-                    .post{
-                        display: flex;
-                        flex-direction: column;
-                        gap: 20px;
-                        h1{
-                            font-weight: 800;
-                        }
-                        .address{
-                            gap: 5px;
-                            color: #4b4b4b;
-                            font-size: 20px;
-                            img{
-                                height: 20px;
-                                width: 20px;
-                            }
-                        }
-                        .price{
-                            padding: 5px;
-                            background: #eec71b;
-                            border-radius: 5px;
-                            width: max-content;
-                            font-size: 20px;
-
-                        }
-                    }
-                    .user{
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: center;
-                        gap: 20px;
-                        padding: 0px 50px;
-                        border-radius: 10px;
-                        background-color: #ffd22e9b;
-                        font-weight: 600;
-
-                        img{
-                            width: 50px;
-                            height: 50px;
-                            border-radius: 50%;
-                            object-fit: cover;
-                        }
-                    }
-                }
-
-                .bottom{
-                    margin-top: 50px;
-                    color: 555;
-                    line-height: 20px;
-                }
-            }
-        }
+    @include bp-lg {
+      flex: 3;
+      height: 100%;
+      overflow-y: scroll;
+      background-color: initial;
     }
-    .features{
-        flex:2;
-        padding: 0px 20px;
-        height: 100%; 
-        overflow-y: scroll;
-        background-color: white;
-        @include md{
-            flex:none;
-            height: 100%;
-            background-color: white;
-        }
-        @include sm{
-            flex:none;
-            height: 100%;
-            background-color: white;
-            padding: 0px;
-        }
-        .wrapper{
-            padding: 0 20px;
+
+    .wrapper {
+      padding-right: 0;
+
+      @include bp-lg {
+        padding-right: 50px;
+      }
+
+      .info {
+        margin-top: 20px;
+
+        .top {
+          display: flex;
+          justify-content: space-between;
+
+          .post {
             display: flex;
-            height: 90%; 
-            @include md{
-                flex:none;
-                height: 100%;
-                background-color: white;
-            }
             flex-direction: column;
-            gap: 10px;
-            img{
-                width: 24px;
-                height: 24px;
-            }
-            .title{
-                font-weight: bold;
-                font-size: 18px;
+            gap: 20px;
 
-            }
+            h1 { font-weight: 800; }
 
-            .feature{
-                display: flex;
-                align-items: center;
-                gap: 20px;
-                img{
-                    background-color: #ffffe3;
-                }
-                .featureText{
-                    span{
-                        font-weight: bold;
-                    }
-                }
-            }
-            .listVertical{
-                display: flex;
-                flex-direction: column;
-                padding: 6px 5px;
-                gap: 20px;
-                background-color: white;
-                border: solid white;
-                border-radius: 7px;
-            }
-            .listHorizontal{
-                display: flex;
-                justify-content: space-between;
-                padding: 6px 5px;
-                gap: 20px;
-                background-color: white;
-                border: solid white;
-                border-radius: 7px;
+            .address {
+              gap: 5px;
+              color: #4b4b4b;
+              font-size: 20px;
+
+              img {
+                height: 20px;
+                width: 20px;
+              }
             }
 
-            .sizes{
-                display: flex;
-                justify-content: space-between;
-                .size{
-                    display: flex;
-                    align-items: center;
-                    background-color: white;
-                    gap: 10px;padding: 20px;
-                    border-radius: 10px;
-                }
+            .price {
+              padding: 5px;
+              background: #eec71b;
+              border-radius: 5px;
+              width: max-content;
+              font-size: 20px;
             }
-            .mapContainer{
-                width: 100%;
-                height: 180px;
-            }
-            .buttons{
-                display: flex;
-                gap: 10px;
-                align-items: center;
-                button{
-                    background-color: white;
-                    padding: 10px;
-                    border-radius: 7px;
-                    cursor: pointer;
-                    font-size: 18px;
-                    img{
-                        height: 18px;
-                        width: 18px;
-                    }
-                }
-            }
+          }
 
+          .user {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 0 50px;
+            border-radius: 10px;
+            background-color: #ffd22e9b;
+            font-weight: 600;
+
+            img {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+          }
         }
-        
+
+        .bottom {
+          margin-top: 50px;
+          color: #555;
+          line-height: 20px;
+        }
+      }
     }
-    
+  }
+
+  .features {
+    flex: none;
+    padding: 0;
+    height: 100%;
+    overflow-y: scroll;
+    background-color: white;
+
+    @include bp-lg {
+      flex: 2;
+      padding: 0 20px;
+    }
+
+    .wrapper {
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      height: 90%;
+
+      @include bp-lg {
+        height: 90%;
+      }
+
+      img {
+        width: 24px;
+        height: 24px;
+      }
+
+      .title {
+        font-weight: bold;
+        font-size: 18px;
+      }
+
+      .feature {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        img { background-color: #ffffe3; }
+
+        .featureText span { font-weight: bold; }
+      }
+
+      .listVertical {
+        display: flex;
+        flex-direction: column;
+        padding: 6px 5px;
+        gap: 20px;
+        background-color: white;
+        border: solid white;
+        border-radius: 7px;
+      }
+
+      .listHorizontal {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 5px;
+        gap: 20px;
+        background-color: white;
+        border: solid white;
+        border-radius: 7px;
+      }
+
+      .sizes {
+        display: flex;
+        justify-content: space-between;
+
+        .size {
+          display: flex;
+          align-items: center;
+          background-color: white;
+          gap: 10px;
+          padding: 20px;
+          border-radius: 10px;
+        }
+      }
+
+      .mapContainer {
+        width: 100%;
+        height: 180px;
+      }
+
+      .buttons {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        button {
+          background-color: white;
+          padding: 10px;
+          border-radius: 7px;
+          cursor: pointer;
+          font-size: 18px;
+
+          img {
+            height: 18px;
+            width: 18px;
+          }
+        }
+      }
+    }
+  }
 }

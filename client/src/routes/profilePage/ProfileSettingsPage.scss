@@ -1,0 +1,109 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.profileSettings {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  max-width: 640px;
+}
+
+.settingsSection {
+  padding-bottom: $spacing-xl;
+  border-bottom: 1px solid $color-border;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  h3 {
+    font-size: $font-lg;
+    font-weight: 700;
+    margin-bottom: $spacing-md;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    label {
+      font-size: $font-sm;
+      font-weight: 600;
+      color: $color-text-muted;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    p {
+      font-size: $font-base;
+      font-weight: 500;
+    }
+  }
+
+  .hint {
+    font-size: $font-sm;
+    color: $color-text-muted;
+    margin-top: 4px;
+  }
+}
+
+// ── Danger Zone ───────────────────────────────────────────────────────────────
+
+.dangerZone {
+  h3 {
+    color: $color-danger;
+  }
+
+  p {
+    font-size: $font-sm;
+    color: $color-text-muted;
+    margin-bottom: $spacing-md;
+  }
+
+  .deleteConfirmBlock {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    max-width: 320px;
+
+    label {
+      font-size: $font-sm;
+      color: $color-text-muted;
+    }
+
+    input {
+      padding: 10px 14px;
+      border: 1px solid $color-border;
+      border-radius: 6px;
+      font-size: $font-base;
+      outline: none;
+
+      &:focus {
+        border-color: $color-danger;
+      }
+    }
+  }
+
+  .deleteBtn {
+    padding: 12px 24px;
+    background: $color-danger;
+    color: $color-white;
+    font-weight: 700;
+    font-size: $font-base;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    width: max-content;
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    &:not(:disabled):hover {
+      opacity: 0.85;
+    }
+  }
+}

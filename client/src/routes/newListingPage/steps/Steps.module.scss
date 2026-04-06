@@ -1,0 +1,437 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+// ── Shared step layout ────────────────────────────────────────────────────────
+.step {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: $spacing-md $spacing-lg;
+  padding-bottom: 30px;
+
+  @include bp-md {
+    padding: $spacing-md $spacing-xl;
+    padding-bottom: 30px;
+  }
+}
+
+.stepHeader {
+  margin-bottom: $spacing-md;
+  padding: $spacing-md $spacing-md;
+  background: $color-surface;
+  border-radius: $radius-md;
+  border: 1px solid rgba(217, 117, 88, 0.18);
+  box-shadow: inset 3px 0 0 $color-accent;
+}
+
+.stepTitle {
+  font-family: $font-family-base;
+  font-size: $font-size-h1;
+  font-weight: $font-weight-semibold;
+  color: $color-text;
+  line-height: $line-height-heading;
+  margin: 0 0 $spacing-sm;
+}
+
+.stepSubtitle {
+  font-family: $font-family-base;
+  font-size: $font-size-body;
+  color: $color-text-muted;
+  line-height: $line-height-body;
+  margin: 0;
+}
+
+// ── Field groups ──────────────────────────────────────────────────────────────
+.fields {
+  background: $color-white;
+  border: 1.5px solid $color-border;
+  border-radius: $radius-md;
+  padding: $spacing-lg;
+  box-shadow: 0 2px 16px rgba(28, 25, 23, 0.05), 0 1px 4px rgba(28, 25, 23, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  @include bp-md {
+    padding: $spacing-xl;
+  }
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.groupLabel {
+  font-family: $font-family-base;
+  font-size: $font-size-label;
+  font-weight: $font-weight-medium;
+  color: $color-text-muted;
+  line-height: $line-height-body;
+}
+
+.groupError {
+  font-family: $font-family-base;
+  font-size: $font-size-hint;
+  color: $color-error;
+  margin: 0;
+}
+
+// ── Listing type pill toggle ──────────────────────────────────────────────────
+.pillToggle {
+  display: flex;
+  gap: 0;
+  border: 1.5px solid $color-border;
+  border-radius: $radius-md;
+  overflow: hidden;
+  background: $color-white;
+  width: fit-content;
+}
+
+.pillBtn {
+  padding: 10px $spacing-lg;
+  border: none;
+  background: transparent;
+  color: $color-text-muted;
+  font-family: $font-family-base;
+  font-size: $font-size-body;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  min-width: 120px;
+
+  &:hover:not(.pillActive) {
+    background: $color-surface;
+    color: $color-text;
+  }
+}
+
+.pillActive {
+  background: $color-accent;
+  color: $color-white;
+  font-weight: $font-weight-semibold;
+
+  &:hover {
+    background: $color-accent-dark;
+  }
+}
+
+// ── Property type cards ───────────────────────────────────────────────────────
+.propertyGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-sm;
+
+  @include bp-sm {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.propertyCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-lg $spacing-md;
+  border: 1.5px solid $color-border;
+  border-radius: $radius-md;
+  background: $color-white;
+  color: $color-text-muted;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover:not(.propertyCardActive) {
+    border-color: $color-accent;
+    color: $color-accent;
+    background: rgba(217, 117, 88, 0.03);
+  }
+}
+
+.propertyCardActive {
+  border-color: $color-accent;
+  background: rgba(217, 117, 88, 0.08);
+  color: $color-accent-dark;
+  box-shadow: 0 0 0 1px $color-accent;
+
+  .propertyIcon {
+    color: $color-accent;
+  }
+
+  .propertyLabel {
+    color: $color-accent-dark;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.propertyIcon {
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+.propertyLabel {
+  font-family: $font-family-base;
+  font-size: $font-size-label;
+  font-weight: $font-weight-medium;
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+// ── Step 2 — row layouts ──────────────────────────────────────────────────────
+.stepperRow {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  @include bp-sm {
+    flex-direction: row;
+    gap: $spacing-lg;
+  }
+}
+
+.stepperItem {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  flex: 1;
+}
+
+.stepperLabel {
+  font-family: $font-family-base;
+  font-size: $font-size-label;
+  font-weight: $font-weight-medium;
+  color: $color-text-muted;
+}
+
+.amenityRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+}
+
+// ── Step 3 — geocode button ───────────────────────────────────────────────────
+.geocodeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: 10px $spacing-lg;
+  border: 1.5px solid $color-accent;
+  border-radius: $radius-sm;
+  background: transparent;
+  color: $color-accent;
+  font-family: $font-family-base;
+  font-size: $font-size-body;
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  width: fit-content;
+
+  &:hover:not(:disabled) {
+    background: $color-accent;
+    color: $color-white;
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+// ── Step 3 — map ──────────────────────────────────────────────────────────────
+.mapPreview {
+  border-radius: $radius-md;
+  overflow: hidden;
+  height: 220px;
+  border: 1.5px solid $color-border;
+
+  @include bp-md {
+    height: 280px;
+  }
+}
+
+.geocodingStatus {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  font-family: $font-family-base;
+  font-size: $font-size-hint;
+  color: $color-text-muted;
+  padding: $spacing-sm 0;
+}
+
+.geocodingError {
+  color: $color-error;
+  font-weight: $font-weight-medium;
+}
+
+.geocodingSuccess {
+  color: $color-success;
+  font-weight: $font-weight-medium;
+}
+
+// ── Step 5 — preview ──────────────────────────────────────────────────────────
+.previewSection {
+  border: 1.5px solid $color-border;
+  border-radius: $radius-md;
+  overflow: hidden;
+  background: $color-white;
+}
+
+.previewSectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md $spacing-lg;
+  background: $color-surface;
+  border-bottom: 1px solid $color-border;
+}
+
+.previewSectionTitle {
+  font-family: $font-family-base;
+  font-size: $font-size-label;
+  font-weight: $font-weight-semibold;
+  color: $color-text;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.editBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px $spacing-sm;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  background: transparent;
+  color: $color-text-muted;
+  font-family: $font-family-base;
+  font-size: $font-size-hint;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    border-color: $color-accent;
+    color: $color-accent;
+  }
+}
+
+.previewSectionBody {
+  padding: $spacing-lg;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.previewRow {
+  display: flex;
+  gap: $spacing-md;
+  font-family: $font-family-base;
+  font-size: $font-size-body;
+  line-height: $line-height-body;
+
+  dt {
+    flex: 0 0 140px;
+    font-size: $font-size-label;
+    font-weight: $font-weight-medium;
+    color: $color-text-muted;
+  }
+
+  dd {
+    flex: 1;
+    color: $color-text;
+    margin: 0;
+  }
+}
+
+.previewPhotos {
+  display: flex;
+  gap: $spacing-sm;
+  flex-wrap: wrap;
+  padding: $spacing-md $spacing-lg;
+}
+
+.previewPhotoThumb {
+  width: 72px;
+  height: 56px;
+  border-radius: $radius-sm;
+  object-fit: cover;
+  border: 1.5px solid $color-border;
+}
+
+.publishBtn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: $radius-sm;
+  background: $color-accent;
+  color: $color-white;
+  font-family: $font-family-base;
+  font-size: 1.05rem;
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  margin-top: $spacing-lg;
+
+  &:hover:not(:disabled) {
+    background: $color-accent-dark;
+    box-shadow: 0 6px 24px rgba(196, 97, 61, 0.35);
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.publishSpinner {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+// ── Success state ─────────────────────────────────────────────────────────────
+.successState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-md;
+  padding: $spacing-xl * 2 $spacing-lg;
+  text-align: center;
+}
+
+.successIcon {
+  color: $color-success;
+  animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.successTitle {
+  font-family: $font-family-base;
+  font-size: $font-size-h1;
+  font-weight: $font-weight-semibold;
+  color: $color-success;
+  margin: 0;
+}
+
+.successRedirect {
+  font-family: $font-family-base;
+  font-size: $font-size-body;
+  color: $color-text-muted;
+  margin: 0;
+}

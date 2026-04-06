@@ -1,72 +1,81 @@
-@import "../../responsive.scss";
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
 
-.profilePage{
+// Legacy profilePage — kept for reference, not in router.
+// New implementation: ProfileLayout.tsx + sub-pages.
 
-    display: flex;
+.profilePage {
+  display: flex;
+  flex-direction: column; // mobile: stacked
+
+  @include bp-lg {
+    flex-direction: row;  // desktop: side-by-side
     height: 100%;
+  }
 
-    @include md{
+  .details {
+    flex: none;
+    height: max-content;
+
+    @include bp-lg {
+      flex: 3;
+      height: 100%;
+      overflow-y: scroll;
+    }
+
+    .wrapper {
+      padding-right: 0;
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-xl;
+
+      @include bp-lg {
+        padding-right: 50px;
+      }
+
+      .title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h1 { font-weight: bold; }
+
+        button {
+          font-weight: bold;
+          padding: 20px;
+          background-color: #fece51;
+          cursor: pointer;
+          border: none;
+        }
+      }
+
+      .info {
+        display: flex;
         flex-direction: column;
-        overflow: scroll;
-    }
-    .details{
-        flex:3;
-        overflow-y: scroll;
+        gap: 20px;
 
-        @include md{
-            flex:none;
-            height: max-content;
+        img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          object-fit: cover;
         }
-        .wrapper{
-            padding-right: 50px;
-            display: flex;
-            flex-direction: column;
-            gap: 50px;
+      }
+    }
+  }
 
-            .title{
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
+  .chatContainer {
+    flex: none;
+    height: max-content;
 
-                h1{
-                    font-weight: bold;
-                }
-                button{
-                    font-weight: bold;
-                    padding: 20px;
-                    background-color:#fece51 ;
-                    cursor: pointer;
-                    border: none;
-                }
-            }
-
-            .info{
-                display: flex;flex-direction: column;
-                gap: 20px;
-
-                img{
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 50%;
-                    object-fit: cover;
-                }
-            }
-        }
+    @include bp-lg {
+      flex: 2;
+      height: 100%;
     }
 
-    .chatContianer{
-        flex:2;
-        background-color: fcf5f3;
-        height: 100%;
-        @include md{
-            flex:none;
-            height: max-content;
-        }
+    .wrapper {
+      padding: 0 20px;
+      height: 100%;
     }
-
-    .wrapper{
-        padding: 0px 20px;
-        height: 100%;
-        
-    }
+  }
 }

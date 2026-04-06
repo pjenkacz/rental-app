@@ -1,63 +1,60 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from "@clerk/clerk-react";
 import "./navbar.scss";
 
 const Navbar: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState<boolean>(false);
-  const user = true;
 
-  // Scroll detection
   useEffect(() => {
     const handleScroll = () => {
-      const offset = window.scrollY;
-      if (offset > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 50);
     };
-
-    window.addEventListener('scroll', handleScroll);
-
-    // Cleanup
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const closeMenu = () => setOpen(false);
+
   return (
-    <nav className={scrolled ? 'scrolled' : ''}>
+    <nav className={scrolled ? "scrolled" : ""}>
       <div className="left">
         <Link to="/" className="logo">
           <img src="/logo.png" alt="Logo" />
           <span>majkelovsky</span>
         </Link>
-        <a href="/">Home</a>
+        <Link to="/">Home</Link>
+        <Link to="/listings">Browse</Link>
         <a href="/about">About</a>
         <a href="/contact">Contact</a>
-        <a href="/agents">Agents</a>
       </div>
+
       <div className="right">
-        {user ? (
+        <SignedOut>
+          <SignInButton mode="modal">
+            <button className="navBtn">Sign In</button>
+          </SignInButton>
+          <SignUpButton mode="modal">
+            <button className="navBtn register">Sign Up</button>
+          </SignUpButton>
+        </SignedOut>
+
+        <SignedIn>
           <div className="user">
-            <img
-              src="ApartmentRental/Apartment-Rental-Platform/public/pexels-buildings-1867726_1920.jpg"
-              alt="User"
-            />
-            <span>John Doe</span>
             <Link to="/profile" className="profile">
               <span>Profile</span>
             </Link>
+            <UserButton />
           </div>
-        ) : (
-          <>
-            <a href="/signin">Sign In</a>
-            <a href="/signup" className="register">
-              Sign Up
-            </a>
-          </>
-        )}
+        </SignedIn>
+
         <div className="menuicon">
           <img
             src="/menu.png"
@@ -65,13 +62,25 @@ const Navbar: React.FC = () => {
             onClick={() => setOpen((prev) => !prev)}
           />
         </div>
+
         <div className={open ? "menu active" : "menu"}>
-          <a href="/">Home</a>
+          <Link to="/" onClick={closeMenu}>Home</Link>
+          <Link to="/listings" onClick={closeMenu}>Browse</Link>
           <a href="/about">About</a>
           <a href="/contact">Contact</a>
-          <a href="/agents">Agents</a>
-          <a href="/signin">Sign In</a>
-          <a href="/signup">Sign Up</a>
+
+          <SignedOut>
+            <SignInButton mode="modal">
+              <button className="navBtn" onClick={closeMenu}>Sign In</button>
+            </SignInButton>
+            <SignUpButton mode="modal">
+              <button className="navBtn" onClick={closeMenu}>Sign Up</button>
+            </SignUpButton>
+          </SignedOut>
+
+          <SignedIn>
+            <Link to="/profile" onClick={closeMenu}>Profile</Link>
+          </SignedIn>
         </div>
       </div>
     </nav>

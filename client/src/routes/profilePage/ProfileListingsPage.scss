@@ -1,0 +1,73 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.profileListings {
+  .listingsHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $spacing-xl;
+
+    h3 {
+      font-size: $font-lg;
+      font-weight: 700;
+    }
+  }
+
+  .createBtn {
+    padding: 10px 20px;
+    background: $color-accent;
+    color: #000;
+    font-weight: 700;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: $font-sm;
+    transition: background 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+
+    &:hover {
+      background: $color-accent-dark;
+      transform: translateY(-1px);
+    }
+  }
+
+  // Listings grid — same pattern as homepage
+  .listingsGrid {
+    display: grid;
+    grid-template-columns: 1fr;               // mobile: single column
+    gap: $spacing-lg;
+
+    @include bp-md {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include bp-xl {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-2xl 0;
+  color: $color-text-muted;
+  text-align: center;
+
+  p {
+    font-size: $font-base;
+  }
+}
+
+.ctaLink {
+  font-size: $font-sm;
+  font-weight: 600;
+  color: $color-accent-dark;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,114 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg;
+  font-family: $font-family-base;
+  display: flex;
+  flex-direction: column;
+  padding-top: $navbar-height;
+}
+
+.content {
+  flex: 1;
+  overflow: hidden;
+}
+
+// ── Draft / blocker modal ─────────────────────────────────────────────────────
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 25, 23, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: $spacing-lg;
+  backdrop-filter: blur(2px);
+}
+
+.modal {
+  background: $color-white;
+  border-radius: $radius-lg;
+  padding: $spacing-xl;
+  max-width: 440px;
+  width: 100%;
+  box-shadow: $shadow-elevated;
+}
+
+.modalTitle {
+  font-family: $font-family-base;
+  font-size: $font-size-h2;
+  font-weight: $font-weight-semibold;
+  color: $color-text;
+  line-height: $line-height-heading;
+  margin: 0 0 $spacing-sm;
+}
+
+.modalText {
+  font-family: $font-family-base;
+  font-size: $font-size-body;
+  color: $color-text-muted;
+  line-height: $line-height-body;
+  margin: 0 0 $spacing-lg;
+}
+
+.modalActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+  justify-content: flex-end;
+}
+
+.modalPrimary {
+  padding: 10px $spacing-lg;
+  border: none;
+  border-radius: $radius-sm;
+  background: $color-accent;
+  color: $color-white;
+  font-family: $font-family-base;
+  font-size: $font-size-body;
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: $color-accent-dark;
+  }
+}
+
+.modalSecondary {
+  padding: 10px $spacing-lg;
+  border: 1.5px solid $color-border;
+  border-radius: $radius-sm;
+  background: transparent;
+  color: $color-text-muted;
+  font-family: $font-family-base;
+  font-size: $font-size-body;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    border-color: $color-text-muted;
+    color: $color-text;
+  }
+}
+
+.modalGhost {
+  padding: 10px $spacing-md;
+  border: none;
+  background: transparent;
+  color: $color-text-muted;
+  font-family: $font-family-base;
+  font-size: $font-size-body;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover {
+    color: $color-text;
+  }
+}

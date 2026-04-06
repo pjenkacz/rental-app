@@ -22,6 +22,8 @@ export const listings = pgTable("listings", {
   bedrooms: integer("bedrooms").default(0).notNull(),
   bathrooms: integer("bathrooms").default(0).notNull(),
   area: numeric("area", { precision: 10, scale: 2 }), // m²
+  floor: integer("floor"),
+  amenities: text("amenities").array().default([]).notNull(),
   
   // Location
   address: text("address").notNull(),
@@ -35,10 +37,11 @@ export const listings = pgTable("listings", {
   
   // Status
   isPublished: boolean("is_published").default(true).notNull(),
-  
+
   // Timestamps
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  deletedAt: timestamp("deleted_at"), // soft-delete: null = aktywne, data = usunięte
 });
 
 export const listingsRelations = relations(listings, ({ one, many }) => ({
