@@ -9,6 +9,7 @@ import listingsRouter from './routes/lisitings';
 import usersRouter from './routes/users';
 import favoritesRouter from './routes/favourites';
 import webhooksRouter from './routes/webhooks';
+import conversationsRouter from './routes/conversations';
 import { errorHandler } from './middleware/errorHandler';
 import { createRouteHandler } from 'uploadthing/express';
 import { uploadRouter } from './uploadthing/router';
@@ -28,6 +29,7 @@ app.use(clerkMiddleware());
 app.use('/api/listings', listingsRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/favorites', favoritesRouter);
+app.use('/api/conversations', conversationsRouter);
 app.use('/api/uploadthing', createRouteHandler({ router: uploadRouter }));
 
 // Health check

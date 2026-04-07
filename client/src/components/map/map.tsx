@@ -16,13 +16,18 @@ export interface MapItem {
 
 interface MapProps {
   items: MapItem[];
+  zoom?: number;
 }
 
-const Map: React.FC<MapProps> = ({ items }) => {
+const Map: React.FC<MapProps> = ({ items, zoom = 7 }) => {
+  const center: [number, number] = items.length > 0
+    ? [items[0].latitude, items[0].longitude]
+    : [52.47, -1.926];
+
   return (
     <MapContainer
-      center={[52.47, -1.926]}
-      zoom={7}
+      center={center}
+      zoom={zoom}
       scrollWheelZoom={false}
       className="map"
     >

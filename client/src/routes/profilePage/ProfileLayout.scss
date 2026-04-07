@@ -1,159 +1,278 @@
 @use '../../styles/variables' as *;
 @use '../../styles/mixins' as *;
 
+// ── Navbar heights (must match navbar.scss exactly) ───────────────────────────
+// Mobile base:  70px  (nav height in navbar.scss)
+// bp-md 768px+: 80px
+// bp-xl 1280px+:90px
+
+.profileLayout {
+  // Push entire profile section below the fixed navbar.
+  // Navbar is position:fixed so it overlays the page — this padding
+  // creates real space so content starts exactly where navbar ends.
+  padding-top: $navbar-height;
+
+  @include bp-md {
+    padding-top: $navbar-height-md;
+  }
+
+  @include bp-xl {
+    padding-top: $navbar-height-xl;
+  }
+
+  min-height: 100vh;
+  background: #f0ebe4;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+// ── Loading state ─────────────────────────────────────────────────────────────
+
 .profileLoading {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 200px;
-  color: $color-text-muted;
+  color: #78716c;
 }
 
-.profileLayout {
-  max-width: 1200px;
-  margin: 0 auto;
-  // mobile base: smaller top padding
-  padding: 80px $spacing-md $spacing-xl;
+// ── Banner / Header ───────────────────────────────────────────────────────────
+
+.profileBanner {
+  background: linear-gradient(140deg, #1e0d05 0%, #6b2810 35%, #c4613d 68%, #d97558 100%);
+  position: relative;
+  overflow: hidden;
+  padding: 36px 20px 40px;
+
+  // Subtle diagonal texture
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -55deg,
+      transparent,
+      transparent 40px,
+      rgba(255, 255, 255, 0.015) 40px,
+      rgba(255, 255, 255, 0.015) 80px
+    );
+    pointer-events: none;
+  }
 
   @include bp-md {
-    padding: $navbar-height $spacing-lg $spacing-xl;
+    padding: 40px 40px 44px;
   }
 
   @include bp-xl {
-    padding: $navbar-height $spacing-xl $spacing-xl;
+    padding: 48px 48px 52px;
   }
 }
 
-// ── Profile Header ────────────────────────────────────────────────────────────
-
-.profileHeader {
-  margin-bottom: $spacing-xl;
-
-  .headerInner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: $spacing-md;
-    text-align: center;
-
-    @include bp-md {
-      flex-direction: row;
-      align-items: center;
-      text-align: left;
-      gap: $spacing-lg;
-    }
-  }
-
-  .avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    cursor: pointer;
-    border: 3px solid $color-accent;
-    flex-shrink: 0;
-    transition: box-shadow 0.2s ease;
-
-    &:hover {
-      box-shadow: 0 0 0 4px rgba($color-accent, 0.3);
-    }
-
-    @include bp-md {
-      width: 100px;
-      height: 100px;
-    }
-  }
-
-  .headerInfo {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-
-    h2 {
-      font-size: $font-lg;
-      font-weight: 700;
-      margin: 0;
-
-      @include bp-md {
-        font-size: $font-xl;
-      }
-    }
-
-    > span {
-      color: $color-text-muted;
-      font-size: $font-sm;
-    }
-
-    .stats {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: $spacing-sm;
-      font-size: $font-sm;
-      color: $color-text-muted;
-      margin-top: 4px;
-
-      @include bp-md {
-        justify-content: flex-start;
-      }
-    }
-  }
-}
-
-// ── Tab Bar ───────────────────────────────────────────────────────────────────
-
-.profileTabs {
+.profileBannerInner {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
-  gap: 4px;
-  border-bottom: 2px solid $color-border;
-  margin-bottom: $spacing-xl;
-  overflow-x: auto;             // scrollable horizontally on mobile — no wrapping
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+
+  @include bp-md {
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+  }
+}
+
+// ── Avatar ────────────────────────────────────────────────────────────────────
+
+.profileAvatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 4px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3), 0 0 0 8px rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: scale(1.06);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 0 10px rgba(255, 255, 255, 0.12);
+  }
+
+  @include bp-md {
+    width: 108px;
+    height: 108px;
+  }
+}
+
+// ── Profile info text ─────────────────────────────────────────────────────────
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+
+  @include bp-md {
+    align-items: flex-start;
+    text-align: left;
+    flex: 1;
+  }
+}
+
+.profileName {
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+
+  @include bp-md {
+    font-size: 32px;
+  }
+}
+
+.profileEmail {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.01em;
+}
+
+// ── Stats chips ───────────────────────────────────────────────────────────────
+
+.profileStats {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  @include bp-md {
+    justify-content: flex-start;
+  }
+}
+
+.profileStat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 10px;
+  padding: 10px 20px;
+  min-width: 72px;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.18);
+  }
+}
+
+.statNum {
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-top: 3px;
+}
+
+// ── Tab bar ───────────────────────────────────────────────────────────────────
+
+.profileTabBar {
+  background: #fff;
+  border-bottom: 1px solid #e8e2dc;
+  box-shadow: 0 2px 8px rgba(28, 25, 23, 0.06);
+}
+
+.profileTabNav {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  padding: 0;
 
   &::-webkit-scrollbar {
     display: none;
   }
 
-  .tab {
-    padding: 10px 14px;
-    font-size: $font-sm;
-    font-weight: 500;
-    color: $color-text-muted;
-    white-space: nowrap;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -2px;        // overlap nav border-bottom
-    transition: color 0.2s ease, border-color 0.2s ease;
-    text-decoration: none;
+  @include bp-md {
+    padding: 0 40px;
+  }
 
-    &:hover {
-      color: $color-accent;
-    }
-
-    &.active {
-      color: $color-text;
-      border-bottom-color: $color-accent;
-      font-weight: 700;
-    }
-
-    &--external {
-      color: $color-text-muted;
-      font-style: italic;
-
-      &:hover {
-        color: $color-accent;
-      }
-    }
-
-    @include bp-md {
-      padding: 12px 20px;
-      font-size: $font-base;
-    }
+  @include bp-xl {
+    padding: 0 48px;
   }
 }
 
-// ── Tab Content ───────────────────────────────────────────────────────────────
+.profileTab {
+  // Override navbar.scss global "nav a { display: none }" cascade
+  display: block !important;
+  padding: 14px 18px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #78716c;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+  text-decoration: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 
-.profileContent {
-  min-height: 300px;
+  &:hover {
+    color: #d97558;
+  }
+
+  &--active {
+    color: #1c1917;
+    border-bottom-color: #d97558;
+    font-weight: 700;
+  }
+
+  &--external {
+    margin-left: auto;
+    font-style: italic;
+    color: #a8a29e;
+
+    &:hover {
+      color: #d97558;
+    }
+  }
+
+  @include bp-md {
+    padding: 15px 22px;
+    font-size: 14px;
+  }
+}
+
+// ── Page content area ─────────────────────────────────────────────────────────
+
+.profileBody {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 20px 64px;
+
+  @include bp-md {
+    padding: 32px 40px 72px;
+  }
+
+  @include bp-xl {
+    padding: 36px 48px 80px;
+  }
 }

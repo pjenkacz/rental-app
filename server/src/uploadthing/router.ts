@@ -10,7 +10,7 @@ export const uploadRouter = {
       const { userId } = getAuth(req as Parameters<typeof getAuth>[0]);
       if (!userId) throw new Error('Unauthorized');
       return { userId };
-    })
+    }) 
     .onUploadComplete(({ metadata, file }) => {
       console.log(`[uploadthing] listing image uploaded by ${metadata.userId}: ${file.url}`);
       return { url: file.url };

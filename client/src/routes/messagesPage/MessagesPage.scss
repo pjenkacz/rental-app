@@ -1,0 +1,368 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// ── Page layout ───────────────────────────────────────────────────────────────
+
+.messagesPage {
+  display: flex;
+  height: calc(100vh - #{$navbar-height});
+  margin-top: $navbar-height;
+  background: $color-bg;
+  overflow: hidden;
+
+  @include bp-md {
+    height: calc(100vh - #{$navbar-height-md});
+    margin-top: $navbar-height-md;
+  }
+
+  @include bp-xl {
+    height: calc(100vh - #{$navbar-height-xl});
+    margin-top: $navbar-height-xl;
+  }
+}
+
+// ── Sidebar (left panel — conversation list) ──────────────────────────────────
+
+.messagesPage__sidebar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-right: 1px solid $color-border;
+  overflow: hidden;
+
+  // Desktop: fixed 35% width
+  @include bp-md {
+    width: 35%;
+    flex-shrink: 0;
+
+    &--hidden {
+      display: flex; // always visible on desktop
+    }
+  }
+
+  // Mobile: hidden when chat is open
+  &--hidden {
+    display: none;
+  }
+}
+
+.messagesPage__sidebarHeader {
+  padding: 20px 16px 16px;
+  border-bottom: 1px solid $color-border;
+  background: $color-surface;
+
+  h2 {
+    font-size: $font-lg;
+    font-weight: 700;
+    color: $color-text;
+    margin: 0;
+  }
+}
+
+.messagesPage__conversationList {
+  flex: 1;
+  overflow-y: auto;
+  padding: $spacing-sm 0;
+}
+
+.messagesPage__loading,
+.messagesPage__emptyList {
+  padding: $spacing-xl $spacing-md;
+  text-align: center;
+  color: $color-text-muted;
+  font-size: $font-sm;
+  line-height: 1.6;
+
+  p {
+    margin: 0 0 4px;
+  }
+}
+
+// ── Main (right panel — chat window) ─────────────────────────────────────────
+
+.messagesPage__chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: $color-bg;
+
+  // Mobile: take full width when active
+  &--hidden {
+    display: none;
+
+    @include bp-md {
+      display: flex; // always visible on desktop (shows placeholder)
+    }
+  }
+}
+
+// Placeholder when no conversation selected (desktop)
+.messagesPage__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: $spacing-md;
+  color: $color-text-muted;
+
+  p {
+    font-size: $font-base;
+    margin: 0;
+  }
+}
+
+.messagesPage__placeholderIcon {
+  opacity: 0.5;
+}
+
+// ── ChatWindow ────────────────────────────────────────────────────────────────
+
+.chatWindow {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+// Header
+.chatWindow__header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: 14px 16px;
+  background: #fff;
+  border-bottom: 1px solid $color-border;
+  flex-shrink: 0;
+}
+
+.chatWindow__back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: $color-text-muted;
+  cursor: pointer;
+  border-radius: $radius-sm;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+
+  &:hover {
+    background: $color-surface;
+    color: $color-text;
+  }
+
+  // On desktop, hide back button (user uses sidebar)
+  @include bp-md {
+    display: none;
+  }
+}
+
+.chatWindow__headerAvatar {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+
+  img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.chatWindow__headerAvatarFallback {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: $color-border;
+  color: $color-text-muted;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatWindow__headerName {
+  font-size: $font-base;
+  font-weight: 600;
+  color: $color-text;
+}
+
+// Messages area
+.chatWindow__messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: $spacing-md;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chatWindow__loading,
+.chatWindow__empty {
+  margin: auto;
+  text-align: center;
+  color: $color-text-muted;
+  font-size: $font-sm;
+}
+
+// Individual message row
+.chatWindow__message {
+  display: flex;
+  align-items: flex-end;
+  gap: $spacing-sm;
+  max-width: 75%;
+
+  // Their messages: left-aligned
+  &--theirs {
+    align-self: flex-start;
+    flex-direction: row;
+
+    .chatWindow__bubble {
+      background: #fff;
+      border: 1px solid $color-border;
+      color: $color-text;
+      border-bottom-left-radius: 4px;
+    }
+
+    .chatWindow__msgTime {
+      text-align: left;
+    }
+  }
+
+  // My messages: right-aligned
+  &--mine {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+
+    .chatWindow__bubble {
+      background: $color-accent;
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+
+    .chatWindow__msgTime {
+      text-align: right;
+    }
+  }
+}
+
+.chatWindow__msgAvatar {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  align-self: flex-end;
+
+  img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.chatWindow__msgAvatarFallback {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: $color-border;
+  color: $color-text-muted;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatWindow__msgGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.chatWindow__bubble {
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: $font-sm;
+  line-height: 1.5;
+  word-break: break-word;
+  box-shadow: 0 1px 4px rgba(28, 25, 23, 0.06);
+}
+
+.chatWindow__msgTime {
+  font-size: 11px;
+  color: $color-text-muted;
+  padding: 0 4px;
+}
+
+// Input area
+.chatWindow__input {
+  display: flex;
+  align-items: flex-end;
+  gap: $spacing-sm;
+  padding: 12px 16px;
+  background: #fff;
+  border-top: 1px solid $color-border;
+  flex-shrink: 0;
+  position: sticky;
+  bottom: 0;
+}
+
+.chatWindow__textarea {
+  flex: 1;
+  resize: none;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  padding: 10px 14px;
+  font-size: $font-sm;
+  font-family: inherit;
+  color: $color-text;
+  background: $color-surface;
+  outline: none;
+  line-height: 1.5;
+  max-height: 120px;
+  overflow-y: auto;
+  transition: border-color 0.15s;
+
+  &:focus {
+    border-color: $color-accent;
+  }
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+}
+
+.chatWindow__sendBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: $color-accent;
+  color: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s, transform 0.1s;
+
+  &:hover:not(:disabled) {
+    background: $color-accent-dark;
+    transform: scale(1.05);
+  }
+
+  &:disabled {
+    background: $color-border;
+    cursor: not-allowed;
+  }
+}

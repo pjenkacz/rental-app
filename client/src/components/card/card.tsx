@@ -18,9 +18,10 @@ export interface CardItem {
 
 interface CardProps {
   item: CardItem;
+  onChat?: () => void;
 }
 
-const Card: React.FC<CardProps> = ({ item }) => {
+const Card: React.FC<CardProps> = ({ item, onChat }) => {
   const coverImage = item.images[0]?.url ?? '';
 
   return (
@@ -56,7 +57,7 @@ const Card: React.FC<CardProps> = ({ item }) => {
             <div className="icon">
               <img src="/save.png" alt="Save" />
             </div>
-            <div className="icon">
+            <div className="icon" onClick={onChat} role={onChat ? 'button' : undefined}>
               <img src="/chat.png" alt="Chat" />
             </div>
           </div>

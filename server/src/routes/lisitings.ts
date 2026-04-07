@@ -57,6 +57,18 @@ router.get('/cities', async (req, res, next) => {
   }
 });
 
+// GET /api/listings/user/me — ogłoszenia zalogowanego użytkownika
+// MUSI być przed /:id żeby Express nie potraktował "user" jako ID
+router.get('/user/me', requireAuth, async (req, res, next) => {
+  try {
+    const { userId } = getAuth(req);
+    const listings = await listingService.getByUserId(userId!);
+    res.json({ data: listings });
+  } catch (err) {
+    next(err);
+  }
+});
+
 // GET /api/listings/:id
 router.get('/:id', async (req, res, next) => {
   try {

@@ -1,12 +1,10 @@
 import './slider.scss';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 interface SliderProps {
   images: string[];
 }
 
-// Jeśli używasz "React.FC", możesz zapisać:
-// const Slider: React.FC<SliderProps> = ({ images }) => {
 function Slider({ images }: SliderProps) {
   const [imageId, setImageId] = useState<number | null>(null);
 
@@ -31,14 +29,14 @@ function Slider({ images }: SliderProps) {
       {imageId !== null && (
         <div className="fullSlider">
           <div className="arrow">
-            <img src="arrow.png" alt="" onClick={() => changeSlide("left")} />
+            <img src="/arrow.png" alt="" onClick={() => changeSlide("left")} />
           </div>
           <div className="imgContainer">
             <img src={images[imageId]} alt="" />
           </div>
           <div className="arrow">
             <img
-              src="arrow.png"
+              src="/arrow.png"
               alt=""
               className="right"
               onClick={() => changeSlide("right")}

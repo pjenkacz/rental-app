@@ -10,14 +10,12 @@ const Layout: React.FC = () => {
   useSetupApiClient();
 
   return (
-    <div className="layout">
-      <div className="navbar">
-        <Navbar />
-      </div>
-      <div className="content">
+    <>
+      <Navbar />
+      <main className="pageContent">
         <Outlet />
-      </div>
-    </div>
+      </main>
+    </>
   );
 };
 

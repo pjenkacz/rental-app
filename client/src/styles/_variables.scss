@@ -58,4 +58,6 @@ $font-xl:     24px;
 $font-2xl:    32px;
 
 // ── Navbar height (used for top offset) ──────────────────────────────────────
-$navbar-height: 90px;
+$navbar-height:    70px;   // mobile base
+$navbar-height-md: 80px;   // bp-md (768px+)
+$navbar-height-xl: 90px;   // bp-xl (1280px+)

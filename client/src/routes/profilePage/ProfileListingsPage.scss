@@ -45,6 +45,96 @@
       grid-template-columns: repeat(3, 1fr);
     }
   }
+
+  // Card wrapper with edit/delete actions overlay
+  .myListingCard {
+    position: relative;
+    background: #fff;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    box-shadow: $shadow-card;
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+
+    &:hover {
+      box-shadow: $shadow-elevated;
+      transform: translateY(-2px);
+    }
+
+    // Actions: always visible on mobile
+    .myListingCard__actions {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 6px;
+      z-index: 2;
+    }
+
+    // Actions: hidden until hover on tablet+
+    @include bp-md {
+      .myListingCard__actions {
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+
+      &:hover .myListingCard__actions {
+        opacity: 1;
+      }
+    }
+  }
+
+  .actionBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: $radius-sm;
+    background: #fff;
+    border: 1px solid $color-border;
+    box-shadow: $shadow-card;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+
+    &--edit {
+      color: $color-accent-dark;
+
+      &:hover {
+        background: rgba(196, 97, 61, 0.08);
+        border-color: rgba(196, 97, 61, 0.4);
+      }
+    }
+
+    &--delete {
+      color: $color-error;
+
+      &:hover {
+        background: #fef2f2;
+        border-color: rgba(192, 57, 43, 0.4);
+      }
+
+      &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  // Skeleton cards while loading
+  .skeletonCard {
+    height: 220px;
+    border-radius: $radius-md;
+    background: $color-border;
+    box-shadow: $shadow-card;
+    animation: cardPulse 1.4s ease-in-out infinite;
+  }
+
+  @keyframes cardPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
 }
 
 .emptyState {

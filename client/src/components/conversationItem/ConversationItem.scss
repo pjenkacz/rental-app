@@ -1,0 +1,99 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.conversationItem {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-radius: $radius-sm;
+  transition: background 0.15s;
+  outline: none;
+
+  &:hover {
+    background: $color-surface;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: -2px;
+  }
+
+  &--active {
+    background: rgba(217, 117, 88, 0.1);
+
+    &:hover {
+      background: rgba(217, 117, 88, 0.14);
+    }
+
+    .conversationItem__name {
+      color: $color-accent-dark;
+    }
+  }
+
+  // ── Avatar ──────────────────────────────────────────────────────────────────
+
+  &__avatar {
+    flex-shrink: 0;
+  }
+
+  &__avatarImg {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__avatarFallback {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: $color-border;
+    color: $color-text-muted;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+  }
+
+  // ── Info ────────────────────────────────────────────────────────────────────
+
+  &__info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  &__name {
+    font-size: $font-sm;
+    font-weight: 600;
+    color: $color-text;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__preview {
+    font-size: 12px;
+    color: $color-text-muted;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // ── Timestamp ───────────────────────────────────────────────────────────────
+
+  &__time {
+    font-size: 11px;
+    color: $color-text-muted;
+    flex-shrink: 0;
+    align-self: flex-start;
+    padding-top: 2px;
+  }
+}
