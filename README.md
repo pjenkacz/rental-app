@@ -2,6 +2,17 @@
 
 A full-stack real estate marketplace where users can browse and filter property listings, contact sellers via built-in chat, save favourites, and publish their own listings through a multi-step wizard — all secured with JWT-based authentication.
 
+![React](https://img.shields.io/badge/React-18-61DAFB?style=flat&logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=flat&logo=vite&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=flat&logo=node.js&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-4169E1?style=flat&logo=postgresql&logoColor=white)
+![Drizzle](https://img.shields.io/badge/Drizzle-ORM-C5F74F?style=flat&logo=drizzle&logoColor=black)
+![Clerk](https://img.shields.io/badge/Clerk-Auth-6C47FF?style=flat&logo=clerk&logoColor=white)
+![TanStack Query](https://img.shields.io/badge/TanStack-Query-FF4154?style=flat&logo=reactquery&logoColor=white)
+![Zod](https://img.shields.io/badge/Zod-Validation-3E67B1?style=flat&logo=zod&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=flat&logo=docker&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-yellow?style=flat)
 ---
 
 ## Table of Contents
