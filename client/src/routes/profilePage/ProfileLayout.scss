@@ -41,7 +41,7 @@
   background: linear-gradient(140deg, #1e0d05 0%, #6b2810 35%, #c4613d 68%, #d97558 100%);
   position: relative;
   overflow: hidden;
-  padding: 36px 20px 40px;
+  padding: 14px 20px;
 
   // Subtle diagonal texture
   &::before {
@@ -59,11 +59,11 @@
   }
 
   @include bp-md {
-    padding: 40px 40px 44px;
+    padding: 14px 40px 18px;
   }
 
   @include bp-xl {
-    padding: 48px 48px 52px;
+    padding: 16px 48px 20px;
   }
 }
 
@@ -73,38 +73,38 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 14px;
   position: relative;
   z-index: 1;
 
   @include bp-md {
     flex-direction: row;
     align-items: center;
-    gap: 32px;
+    gap: 28px;
   }
 }
 
 // ── Avatar ────────────────────────────────────────────────────────────────────
 
 .profileAvatar {
-  width: 88px;
-  height: 88px;
+  width: 62px;
+  height: 62px;
   border-radius: 50%;
   object-fit: cover;
   cursor: pointer;
-  border: 4px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3), 0 0 0 8px rgba(255, 255, 255, 0.08);
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 0 4px rgba(255, 255, 255, 0.08);
   flex-shrink: 0;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 
   &:hover {
     transform: scale(1.06);
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), 0 0 0 10px rgba(255, 255, 255, 0.12);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4), 0 0 0 6px rgba(255, 255, 255, 0.12);
   }
 
   @include bp-md {
-    width: 108px;
-    height: 108px;
+    width: 74px;
+    height: 74px;
   }
 }
 
@@ -148,12 +148,13 @@
 .profileStats {
   display: flex;
   gap: 10px;
-  margin-top: 10px;
   flex-wrap: wrap;
   justify-content: center;
 
   @include bp-md {
     justify-content: flex-start;
+    flex-shrink: 0;
+    margin-left: auto;
   }
 }
 
@@ -196,6 +197,18 @@
   background: #fff;
   border-bottom: 1px solid #e8e2dc;
   box-shadow: 0 2px 8px rgba(28, 25, 23, 0.06);
+
+  position: sticky;
+  top: $navbar-height;
+  z-index: 50;
+
+  @include bp-md {
+    top: $navbar-height-md;
+  }
+
+  @include bp-xl {
+    top: $navbar-height-xl;
+  }
 }
 
 .profileTabNav {
@@ -222,8 +235,7 @@
 }
 
 .profileTab {
-  // Override navbar.scss global "nav a { display: none }" cascade
-  display: block !important;
+  display: block;
   padding: 14px 18px;
   font-size: 13.5px;
   font-weight: 500;
@@ -266,13 +278,13 @@
 .profileBody {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 28px 20px 64px;
+  padding: 22px 20px 40px;
 
   @include bp-md {
-    padding: 32px 40px 72px;
+    padding: 24px 40px 40px;
   }
 
   @include bp-xl {
-    padding: 36px 48px 80px;
+    padding: 28px 48px 48px;
   }
 }

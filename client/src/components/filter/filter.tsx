@@ -2,11 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import './filter.scss';
 import type { ListingFilters } from '../../hooks/useListings';
 
-const PRICE_OPTIONS = [
-  100_000, 250_000, 400_000, 500_000, 700_000, 850_000,
-  1_000_000, 1_150_000, 1_300_000, 1_500_000, 2_000_000,
-  2_500_000, 7_500_000, 15_000_000,
-];
+const PRICE_MAX = 5_000_000;
+const PRICE_STEP = 10_000;
 
 function formatPrice(value: number): string {
   if (value >= 1_000_000) {
@@ -92,27 +89,54 @@ const Filter: React.FC<FilterProps> = ({ onSearch, activeCity }) => {
         <div className="filter__sep" />
 
         {/* Type */}
-        <div className="filter__field">
+        <div className="filter__field filter__field--drop">
           <span className="filter__label">Type</span>
-          <select className="filter__select" value={listingType} onChange={(e) => setListingType(e.target.value)}>
-            <option value="">Any</option>
-            <option value="buy">Buy</option>
-            <option value="rent">Rent</option>
-          </select>
+          <button
+            type="button"
+            className={`filter__trigger${openDropdown === 'type' ? ' filter__trigger--open' : ''}`}
+            onClick={(e) => toggleDropdown('type', e)}
+          >
+            <span>{listingType === 'buy' ? 'Buy' : listingType === 'rent' ? 'Rent' : 'Any'}</span>
+            <Chevron />
+          </button>
+          {openDropdown === 'type' && (
+            <div className="filter__dropdown filter__dropdown--sm">
+              <button className={`filter__option${listingType === '' ? ' filter__option--active' : ''}`} onClick={() => { setListingType(''); setOpenDropdown(null); }}>Any</button>
+              <button className={`filter__option${listingType === 'buy' ? ' filter__option--active' : ''}`} onClick={() => { setListingType('buy'); setOpenDropdown(null); }}>Buy</button>
+              <button className={`filter__option${listingType === 'rent' ? ' filter__option--active' : ''}`} onClick={() => { setListingType('rent'); setOpenDropdown(null); }}>Rent</button>
+            </div>
+          )}
         </div>
 
         <div className="filter__sep" />
 
         {/* Property */}
-        <div className="filter__field">
+        <div className="filter__field filter__field--drop">
           <span className="filter__label">Property</span>
-          <select className="filter__select" value={propertyType} onChange={(e) => setPropertyType(e.target.value)}>
-            <option value="">Any</option>
-            <option value="apartment">Apartment</option>
-            <option value="house">House</option>
-            <option value="condo">Condo</option>
-            <option value="land">Land</option>
-          </select>
+          <button
+            type="button"
+            className={`filter__trigger${openDropdown === 'property' ? ' filter__trigger--open' : ''}`}
+            onClick={(e) => toggleDropdown('property', e)}
+          >
+            <span>{propertyType
+              ? propertyType.charAt(0).toUpperCase() + propertyType.slice(1)
+              : 'Any'}
+            </span>
+            <Chevron />
+          </button>
+          {openDropdown === 'property' && (
+            <div className="filter__dropdown filter__dropdown--sm">
+              {(['', 'apartment', 'house', 'condo', 'land']).map((val) => (
+                <button
+                  key={val}
+                  className={`filter__option${propertyType === val ? ' filter__option--active' : ''}`}
+                  onClick={() => { setPropertyType(val); setOpenDropdown(null); }}
+                >
+                  {val === '' ? 'Any' : val.charAt(0).toUpperCase() + val.slice(1)}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="filter__sep" />
@@ -129,19 +153,40 @@ const Filter: React.FC<FilterProps> = ({ onSearch, activeCity }) => {
             <Chevron />
           </button>
           {openDropdown === 'minPrice' && (
-            <div className="filter__dropdown">
-              <button className="filter__option filter__option--clear" onClick={() => { setMinPrice(null); setOpenDropdown(null); }}>
-                No minimum
+            <div className="filter__price-panel">
+              <input
+                type="number"
+                className="filter__price-number"
+                min={0}
+                max={PRICE_MAX}
+                step={PRICE_STEP}
+                placeholder="0"
+                value={minPrice ?? ''}
+                onChange={(e) => {
+                  const v = e.target.value === '' ? null : Math.min(PRICE_MAX, Math.max(0, Number(e.target.value)));
+                  setMinPrice(v);
+                }}
+              />
+              <input
+                type="range"
+                className="filter__slider"
+                min={0}
+                max={PRICE_MAX}
+                step={PRICE_STEP}
+                value={minPrice ?? 0}
+                onChange={(e) => setMinPrice(Number(e.target.value) === 0 ? null : Number(e.target.value))}
+                style={{ '--pct': `${((minPrice ?? 0) / PRICE_MAX) * 100}%` } as React.CSSProperties}
+              />
+              <div className="filter__price-range-labels">
+                <span>$0</span>
+                <span>$5M</span>
+              </div>
+              <button
+                className="filter__price-clear"
+                onClick={() => { setMinPrice(null); setOpenDropdown(null); }}
+              >
+                Clear
               </button>
-              {PRICE_OPTIONS.map(p => (
-                <button
-                  key={p}
-                  className={`filter__option${minPrice === p ? ' filter__option--active' : ''}`}
-                  onClick={() => { setMinPrice(p); setOpenDropdown(null); }}
-                >
-                  ${p.toLocaleString()}
-                </button>
-              ))}
             </div>
           )}
         </div>
@@ -160,19 +205,40 @@ const Filter: React.FC<FilterProps> = ({ onSearch, activeCity }) => {
             <Chevron />
           </button>
           {openDropdown === 'maxPrice' && (
-            <div className="filter__dropdown">
-              <button className="filter__option filter__option--clear" onClick={() => { setMaxPrice(null); setOpenDropdown(null); }}>
-                No maximum
+            <div className="filter__price-panel">
+              <input
+                type="number"
+                className="filter__price-number"
+                min={0}
+                max={PRICE_MAX}
+                step={PRICE_STEP}
+                placeholder="5,000,000"
+                value={maxPrice ?? ''}
+                onChange={(e) => {
+                  const v = e.target.value === '' ? null : Math.min(PRICE_MAX, Math.max(0, Number(e.target.value)));
+                  setMaxPrice(v);
+                }}
+              />
+              <input
+                type="range"
+                className="filter__slider"
+                min={0}
+                max={PRICE_MAX}
+                step={PRICE_STEP}
+                value={maxPrice ?? PRICE_MAX}
+                onChange={(e) => setMaxPrice(Number(e.target.value) === PRICE_MAX ? null : Number(e.target.value))}
+                style={{ '--pct': `${((maxPrice ?? PRICE_MAX) / PRICE_MAX) * 100}%` } as React.CSSProperties}
+              />
+              <div className="filter__price-range-labels">
+                <span>$0</span>
+                <span>$5M</span>
+              </div>
+              <button
+                className="filter__price-clear"
+                onClick={() => { setMaxPrice(null); setOpenDropdown(null); }}
+              >
+                Clear
               </button>
-              {PRICE_OPTIONS.map(p => (
-                <button
-                  key={p}
-                  className={`filter__option${maxPrice === p ? ' filter__option--active' : ''}`}
-                  onClick={() => { setMaxPrice(p); setOpenDropdown(null); }}
-                >
-                  ${p.toLocaleString()}
-                </button>
-              ))}
             </div>
           )}
         </div>

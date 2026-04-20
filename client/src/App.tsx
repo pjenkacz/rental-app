@@ -12,6 +12,7 @@ import NewListingPage from "./routes/newListingPage/NewListingPage";
 import EditListingPage from "./routes/editListingPage/EditListingPage";
 import MessagesPage from "./routes/messagesPage/MessagesPage";
 import NotFoundPage from "./routes/notFoundPage/NotFoundPage";
+import AboutPage from "./routes/aboutPage/AboutPage";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 const router = createBrowserRouter([
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
       { index: true, element: <HomePage /> },
       { path: "listings", element: <ListPage /> },
       { path: "listings/:id", element: <SinglePage /> },
+      { path: "about", element: <AboutPage /> },
 
       // Chronione routes — wymagają zalogowania
       {

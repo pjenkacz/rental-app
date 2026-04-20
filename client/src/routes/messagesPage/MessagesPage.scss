@@ -5,19 +5,17 @@
 
 .messagesPage {
   display: flex;
-  height: calc(100vh - #{$navbar-height});
-  margin-top: $navbar-height;
+  height: 100vh;
+  padding-top: $navbar-height;
   background: $color-bg;
   overflow: hidden;
 
   @include bp-md {
-    height: calc(100vh - #{$navbar-height-md});
-    margin-top: $navbar-height-md;
+    padding-top: $navbar-height-md;
   }
 
   @include bp-xl {
-    height: calc(100vh - #{$navbar-height-xl});
-    margin-top: $navbar-height-xl;
+    padding-top: $navbar-height-xl;
   }
 }
 
@@ -31,19 +29,19 @@
   border-right: 1px solid $color-border;
   overflow: hidden;
 
+  // Mobile: hidden when chat is open; desktop: always visible
+  &--hidden {
+    display: none;
+
+    @include bp-md {
+      display: flex;
+    }
+  }
+
   // Desktop: fixed 35% width
   @include bp-md {
     width: 35%;
     flex-shrink: 0;
-
-    &--hidden {
-      display: flex; // always visible on desktop
-    }
-  }
-
-  // Mobile: hidden when chat is open
-  &--hidden {
-    display: none;
   }
 }
 

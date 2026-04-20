@@ -54,15 +54,10 @@ A full-stack real estate marketplace where users can browse and filter property 
 
 ## Architecture & Data Flow
 
-### 1. Two-Layer Authentication
-
-Every protected resource is guarded at two levels:
-
-**Frontend — `ProtectedRoute`**
-React Router wrapper using Clerk's `useAuth()`. If the user is not signed in, renders `<RedirectToSignIn />` before the page component even mounts. Wraps: `/profile/*`, `/listings/new`, `/listings/:id/edit`, `/messages/*`.
+### 1. Authentication
 
 **Backend — `requireAuth` middleware**
-Every sensitive route runs `getAuth(req)` from `@clerk/express`. If no valid session token is present, returns `401 Unauthorized` immediately. The `userId` extracted here is used for all database writes — the server never trusts a user-supplied ID in the body.
+Every sensitive route runs `getAuth(req)` from `@clerk/express`. If no valid session token is present, returns `401 Unauthorized` immediately. The `userId` extracted here is used for all database writes - the server never trusts a user-supplied ID in the body.
 
 ```
 Browser request
@@ -72,7 +67,7 @@ Browser request
   → Service layer uses userId for DB operations
 ```
 
-### 2. Axios Interceptor — Automatic Token Attachment
+### 2. Axios Interceptor — Core Funcionality
 
 `client/src/lib/apiClient.ts` — a configured axios instance used by every hook in the app:
 - **Request interceptor**: fetches the current Clerk JWT and attaches it as `Authorization: Bearer <token>` before every outgoing request
@@ -92,7 +87,7 @@ Route handler  →  Service  →  Drizzle ORM  →  Neon PostgreSQL
 - **Services** (`server/src/services/`) — contain all business logic: filtering, pagination, ownership checks, DB queries
 - **Drizzle** — type-safe query builder; schema defined once in `db/schema.ts`, used across the entire backend
 
-### 4. Zod Validators as a Separate Layer
+### 4. Zod Validators 
 
 All input validation lives in `server/src/validators/` — one file per resource (`listing.ts`, `conversation.ts`, `message.ts`). Routes call `.parse()` on incoming data before it reaches the service layer. Invalid input returns `400` with structured error details. The same Zod schemas are mirrored on the frontend for form validation, keeping client and server rules in sync.
 
@@ -107,20 +102,18 @@ All server state is managed through custom hooks in `client/src/hooks/`:
 | `useFavorite` | Toggle with optimistic update — UI reflects change instantly, rolls back on error |
 | `useConversations` | Conversation list for the messages page |
 | `useMessages` | Polls `GET /api/conversations/:id/messages` every 4 seconds for real-time feel |
-| `useUnreadCount` | Unread badge count in the navbar; refetches on window focus |
 
-TanStack Query eliminates manual loading/error state, deduplicates concurrent requests, and keeps the UI consistent without prop drilling.
+TanStack Query eliminates manual loading/error state and deduplicates concurrent requests.
 
 ---
 
 ## Features
 
-- **Homepage** — hero search bar with Rent/Buy toggle, latest listings section, value proposition, testimonials carousel
-- **Browse listings** — filterable and sortable listing grid with city autocomplete and price/type/area filters
-- **Single listing page** — image gallery with drag-and-drop reorder, interactive Leaflet map, favourite button (auth-gated), contact seller button
-- **Listing wizard** *(main feature)* — multi-step form (`/listings/new`) split across 5 steps: Basic Info → Details → Location → Photos → Preview. Each step is validated independently with Zod + React Hook Form. Progress is auto-saved to `localStorage` so a page refresh never loses data. Uploadthing handles photo uploads with drag-and-drop and a 10-file limit. The listing is only published on the final Preview step.
-- **Profile** — tabbed layout (`/profile/*`) with Overview, My Listings, Saved listings and Settings; avatar upload via Uploadthing
-- **Messages** — two-column messenger (desktop) / full-screen chat (mobile); polling-based real-time updates; unread count badge in the navbar
+- **Browse listings** — filterable listing grid with city autocomplete and price/type/area filters
+- **Single listing page** — image gallery interactive Leaflet map, favourite button, contact seller button
+- **Listing wizard** *(main feature)* — multi-step form (`/listings/new`) split across 5 steps: Basic Info → Details → Location → Photos → Preview. Each step is validated independently with Zod + React Hook Form. Progress is auto-saved to `localStorage` so a page refresh never loses data. Uploadthing handles photo uploads with drag-and-drop. 
+- **Profile** — tabbed layout (`/profile/*`) with Overview, My Listings, Saved listings and Settings; 
+- **Messages** — polling-based real-time updates;
 - **Auth** — Clerk modals for sign-in/sign-up; no custom session logic; `ProtectedRoute` guards all private pages
 
 ---

@@ -37,19 +37,19 @@ const ProfileLayout: React.FC = () => {
             <span className="profileEmail">
               {user.primaryEmailAddress?.emailAddress}
             </span>
-            <div className="profileStats">
-              <div className="profileStat">
-                <span className="statNum">0</span>
-                <span className="statLabel">Listings</span>
-              </div>
-              <div className="profileStat">
-                <span className="statNum">0</span>
-                <span className="statLabel">Saved</span>
-              </div>
-              <div className="profileStat">
-                <span className="statNum">0</span>
-                <span className="statLabel">Messages</span>
-              </div>
+          </div>
+          <div className="profileStats">
+            <div className="profileStat">
+              <span className="statNum">0</span>
+              <span className="statLabel">Listings</span>
+            </div>
+            <div className="profileStat">
+              <span className="statNum">0</span>
+              <span className="statLabel">Saved</span>
+            </div>
+            <div className="profileStat">
+              <span className="statNum">0</span>
+              <span className="statLabel">Messages</span>
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@ const ProfileLayout: React.FC = () => {
 
       {/* Tab navigation */}
       <div className="profileTabBar">
-        <nav className="profileTabNav">
+        <div role="navigation" className="profileTabNav">
           <NavLink
             to="/profile"
             end
@@ -80,7 +80,7 @@ const ProfileLayout: React.FC = () => {
           <NavLink to="/messages" className="profileTab profileTab--external">
             Messages →
           </NavLink>
-        </nav>
+        </div>
       </div>
 
       {/* Sub-page content */}
