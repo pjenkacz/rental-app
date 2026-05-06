@@ -16,6 +16,7 @@ export interface Conversation {
   sellerId: string;
   lastMessageAt: string;
   createdAt: string;
+  unreadCount: number;
   otherUser: ConversationUser;
   lastMessage: { content: string; senderId: string } | null;
   listing: { title: string };

@@ -64,7 +64,22 @@ export const conversationService = {
       }
     }
 
-    // 6. Złożenie odpowiedzi
+    // 6. Nieprzeczytane per konwersacja (wysłane przez kogoś innego)
+    const unreadRows = await db
+      .select({ conversationId: messages.conversationId, count: count() })
+      .from(messages)
+      .where(
+        and(
+          inArray(messages.conversationId, convIds),
+          ne(messages.senderId, userId),
+          eq(messages.isRead, false),
+        )
+      )
+      .groupBy(messages.conversationId);
+
+    const unreadMap = Object.fromEntries(unreadRows.map(r => [r.conversationId, Number(r.count)]));
+
+    // 7. Złożenie odpowiedzi
     return convs.map(conv => {
       const otherUserId = conv.buyerId === userId ? conv.sellerId : conv.buyerId;
       const otherUser = usersMap[otherUserId];
@@ -78,6 +93,7 @@ export const conversationService = {
         sellerId: conv.sellerId,
         lastMessageAt: conv.lastMessageAt,
         createdAt: conv.createdAt,
+        unreadCount: unreadMap[conv.id] ?? 0,
         otherUser: otherUser ?? { id: otherUserId, firstName: null, lastName: null, avatarUrl: null },
         lastMessage: lastMsg
           ? { content: lastMsg.content, senderId: lastMsg.senderId }

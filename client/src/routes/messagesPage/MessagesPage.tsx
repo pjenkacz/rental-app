@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@clerk/clerk-react';
 import { Send, ArrowLeft } from 'lucide-react';
 import { useConversations } from '../../hooks/useConversations';
-import { useMessages, useSendMessage } from '../../hooks/useMessages';
+import { useMessages, useSendMessage, useMarkAsRead } from '../../hooks/useMessages';
 import ConversationItem from '../../components/conversationItem/ConversationItem';
 import './MessagesPage.scss';
 
@@ -14,6 +14,8 @@ interface ChatWindowProps {
   currentUserId: string;
   otherUserName: string;
   otherUserAvatar: string | null;
+  listingTitle: string;
+  listingId: string;
   onBack: () => void;
 }
 
@@ -22,6 +24,8 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
   currentUserId,
   otherUserName,
   otherUserAvatar,
+  listingTitle,
+  listingId,
   onBack,
 }) => {
   const [inputValue, setInputValue] = useState('');
@@ -29,9 +33,17 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
 
   const { data: messages = [], isLoading } = useMessages(conversationId);
   const sendMessage = useSendMessage(conversationId);
+  const markAsRead = useMarkAsRead(conversationId);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  useEffect(() => {
+    const hasUnread = messages.some(
+      m => !m.isRead && m.senderId !== currentUserId
+    );
+    if (hasUnread) markAsRead.mutate();
   }, [messages]);
 
   const handleSend = async () => {
@@ -69,7 +81,16 @@ const ChatWindow: React.FC<ChatWindowProps> = ({
             </div>
           )}
         </div>
-        <span className="chatWindow__headerName">{otherUserName}</span>
+        <div className="chatWindow__headerMeta">
+          <span className="chatWindow__headerName">{otherUserName}</span>
+          <Link
+            to={`/listings/${listingId}`}
+            className="chatWindow__listingLink"
+            title="Przejdź do ogłoszenia"
+          >
+            {listingTitle}
+          </Link>
+        </div>
       </div>
 
       <div className="chatWindow__messages">
@@ -219,6 +240,8 @@ const MessagesPage: React.FC = () => {
             currentUserId={userId ?? ''}
             otherUserName={otherUserName}
             otherUserAvatar={activeConversation.otherUser.avatarUrl}
+            listingTitle={activeConversation.listing.title}
+            listingId={activeConversation.listingId}
             onBack={handleBack}
           />
         )}

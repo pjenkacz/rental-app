@@ -32,10 +32,46 @@
     }
   }
 
+  // ── Unread state ────────────────────────────────────────────────────────────
+
+  &--unread {
+    background: rgba(217, 117, 88, 0.06);
+    border-left: 3px solid $color-accent;
+    padding-left: 13px;
+
+    .conversationItem__name {
+      font-weight: 800;
+      color: $color-text;
+      letter-spacing: -0.01em;
+    }
+
+    .conversationItem__preview {
+      color: $color-text;
+      font-weight: 600;
+    }
+
+    .conversationItem__time {
+      color: $color-accent;
+      font-weight: 700;
+    }
+  }
+
   // ── Avatar ──────────────────────────────────────────────────────────────────
 
-  &__avatar {
+  &__avatarWrap {
+    position: relative;
     flex-shrink: 0;
+  }
+
+  &__dot {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    width: 11px;
+    height: 11px;
+    background: $color-accent;
+    border: 2px solid #fff;
+    border-radius: 50%;
   }
 
   &__avatarImg {

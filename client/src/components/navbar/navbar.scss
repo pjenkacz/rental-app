@@ -200,6 +200,22 @@ nav {
       }
     }
 
+    .messagesLink {
+      position: relative;
+      display: flex !important;
+      align-items: center;
+      color: rgba(255, 255, 255, 0.9);
+      padding: 4px;
+      transition: color 0.3s ease;
+
+      &::after { display: none; }
+
+      &:hover {
+        color: $color-accent;
+        transform: translateY(-2px);
+      }
+    }
+
     // Clerk auth buttons — reset native button, apply same look as nav links
     button.navBtn {
       background: none;

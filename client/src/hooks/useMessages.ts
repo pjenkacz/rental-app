@@ -37,6 +37,18 @@ export const useMessages = (conversationId: string | undefined) => {
   });
 };
 
+export const useMarkAsRead = (conversationId: string | undefined) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: () =>
+      apiClient.patch(`/api/conversations/${conversationId}/messages/read`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['unread-count'] });
+      queryClient.invalidateQueries({ queryKey: ['conversations'] });
+    },
+  });
+};
+
 export const useSendMessage = (conversationId: string) => {
   const queryClient = useQueryClient();
 

@@ -188,10 +188,34 @@
   justify-content: center;
 }
 
+.chatWindow__headerMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
 .chatWindow__headerName {
   font-size: $font-base;
   font-weight: 600;
   color: $color-text;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chatWindow__listingLink {
+  font-size: 12px;
+  color: $color-accent;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 // Messages area

@@ -28,11 +28,17 @@
   &__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 18px;
     margin-top: 16px;
 
     @media (min-width: 768px) {
       grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    @media (min-width: 1280px) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
     }
   }
 }

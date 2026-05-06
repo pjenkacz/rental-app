@@ -6,18 +6,22 @@
   flex-direction: column;
 
   // Mobile: space below fixed navbar, content flows naturally
-  padding-top: 70px;
+  padding-top: $navbar-height;
 
   @include bp-md {
-    padding-top: 80px;
+    padding-top: $navbar-height-md;
   }
 
   @include bp-lg {
-    // Desktop: side-by-side split view filling the viewport below navbar
+    // Desktop: viewport-locked split view — identyczny wzorzec jak MessagesPage
     flex-direction: row;
-    padding-top: 0;
-    margin-top: 90px;
-    height: calc(100vh - 90px);
+    height: 100vh;
+    padding-top: $navbar-height-md;
+    overflow: hidden;
+  }
+
+  @include bp-xl {
+    padding-top: $navbar-height-xl;
   }
 
   // ── Details (left column) ───────────────────────────────────────────────────

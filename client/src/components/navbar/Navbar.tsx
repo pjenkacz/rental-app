@@ -7,6 +7,8 @@ import {
   SignUpButton,
   UserButton,
 } from "@clerk/clerk-react";
+import { MessageSquare } from "lucide-react";
+import MessagesBadge from "../messagesBadge/MessagesBadge";
 import "./navbar.scss";
 
 const Navbar: React.FC = () => {
@@ -51,6 +53,10 @@ const Navbar: React.FC = () => {
             <Link to="/profile" className="profile">
               <span>Profile</span>
             </Link>
+            <Link to="/messages" className="messagesLink">
+              <MessageSquare size={22} />
+              <MessagesBadge />
+            </Link>
             <UserButton />
           </div>
         </SignedIn>
@@ -80,6 +86,7 @@ const Navbar: React.FC = () => {
 
           <SignedIn>
             <Link to="/profile" onClick={closeMenu}>Profile</Link>
+            <Link to="/messages" onClick={closeMenu}>Wiadomości</Link>
           </SignedIn>
         </div>
       </div>

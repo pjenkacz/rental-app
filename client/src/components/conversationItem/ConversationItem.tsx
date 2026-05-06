@@ -46,7 +46,8 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
   isActive = false,
   onClick,
 }) => {
-  const { otherUser, lastMessage, lastMessageAt } = conversation;
+  const { otherUser, lastMessage, lastMessageAt, unreadCount } = conversation;
+  const isUnread = unreadCount > 0;
 
   const displayName =
     [otherUser.firstName, otherUser.lastName].filter(Boolean).join(' ') || 'Nieznany użytkownik';
@@ -57,13 +58,13 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
 
   return (
     <div
-      className={`conversationItem ${isActive ? 'conversationItem--active' : ''}`}
+      className={`conversationItem ${isActive ? 'conversationItem--active' : ''} ${isUnread ? 'conversationItem--unread' : ''}`}
       onClick={onClick}
       role="button"
       tabIndex={0}
       onKeyDown={e => e.key === 'Enter' && onClick?.()}
     >
-      <div className="conversationItem__avatar">
+      <div className="conversationItem__avatarWrap">
         {otherUser.avatarUrl ? (
           <img src={otherUser.avatarUrl} alt={displayName} className="conversationItem__avatarImg" />
         ) : (
@@ -71,6 +72,7 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
             {getInitials(otherUser.firstName, otherUser.lastName)}
           </div>
         )}
+        {isUnread && <span className="conversationItem__dot" aria-hidden="true" />}
       </div>
 
       <div className="conversationItem__info">
