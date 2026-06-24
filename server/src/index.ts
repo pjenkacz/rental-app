@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-dotenv.config();
 import { clerkMiddleware } from '@clerk/express';
 import { db } from './db';
 import { users } from './db/schema';
@@ -14,6 +13,8 @@ import { errorHandler } from './middleware/errorHandler';
 import { createRouteHandler } from 'uploadthing/express';
 import { uploadRouter } from './uploadthing/router';
 
+
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 

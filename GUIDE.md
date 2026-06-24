@@ -210,4 +210,3 @@ npm run dev       # frontend na localhost:5173
 
 ---
 
-*Dokument wygenerowany: marzec 2026*1
