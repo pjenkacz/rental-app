@@ -242,4 +242,4 @@ Frontend → http://localhost:5173 · Backend → http://localhost:3001
 
 ## License
 
-MIT
+MIT - Everybody allowed to use and modify
